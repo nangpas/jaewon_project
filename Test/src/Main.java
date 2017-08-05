@@ -20,7 +20,6 @@ public class Main extends JFrame implements Runnable {
 	public static int prist = 2;
 	public static int magication = 3;
 	
-	public static int skillcount = 0;
 	
 	Image buffimg;
 
@@ -35,7 +34,8 @@ public class Main extends JFrame implements Runnable {
 	public static Monster ms;
 
 	Thread th;
-
+	Skilltimer skilltimer;
+	
 	public Main() {
 		setTitle("Å×½ºÆ®");
 		setSize(f_width, f_height);
@@ -49,6 +49,9 @@ public class Main extends JFrame implements Runnable {
 			ms = new Monster(600, 250);
 			monsterList.add(ms);
 		}
+		
+		skilltimer = new Skilltimer();
+		skilltimer.start();
 
 		th = new Thread(this);
 		th.start();
@@ -101,7 +104,7 @@ public class Main extends JFrame implements Runnable {
 					p.keyProcess();
 				}
 				
-				skillcount++;
+				System.out.println(skilltimer.i);
 				repaint();
 				Thread.sleep(20);
 				count++;
@@ -174,5 +177,4 @@ public class Main extends JFrame implements Runnable {
 	public static void main(String[] args) {
 		new Main();
 	}
-
 }
