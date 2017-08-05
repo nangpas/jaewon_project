@@ -11,7 +11,8 @@ abstract class Player implements KeyListener {
 	int hp, power, speedOfAttack, speedOfPlayer, barrier;
 
 	int moveStatus;
-
+	int attackCount = 0; 
+	
 	Image humanImg;
 	Image attackImg;
 	Image skill0Img;
@@ -32,6 +33,7 @@ abstract class Player implements KeyListener {
 	boolean keyF = false;
 
 	boolean playerMove = false;
+	boolean attatckOnOff = true;
 	
 	public Player() {
 		charX = 50;

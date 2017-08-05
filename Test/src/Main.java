@@ -19,14 +19,15 @@ public class Main extends JFrame implements Runnable {
 	public static int thief = 1;
 	public static int prist = 2;
 	public static int magication = 3;
-	
-	
+
+	public static boolean tmpB = true;
+
 	Image buffimg;
 
 	public static Graphics humanG[] = new Graphics[playercount];
 	public static Graphics monsterG[] = new Graphics[playercount];
 	public static Graphics skillG[] = new Graphics[playercount];
-	
+
 	public static ArrayList playerList = new ArrayList();
 	public static ArrayList monsterList = new ArrayList();
 
@@ -34,8 +35,7 @@ public class Main extends JFrame implements Runnable {
 	public static Monster ms;
 
 	Thread th;
-	Skilltimer skilltimer;
-	
+
 	public Main() {
 		setTitle("Å×½ºÆ®");
 		setSize(f_width, f_height);
@@ -44,14 +44,10 @@ public class Main extends JFrame implements Runnable {
 		playerList.add(p);
 		addKeyListener(p);
 
-
 		for (int i = 0; i < playercount; i++) {
 			ms = new Monster(600, 250);
 			monsterList.add(ms);
 		}
-		
-		skilltimer = new Skilltimer();
-		skilltimer.start();
 
 		th = new Thread(this);
 		th.start();
@@ -62,13 +58,12 @@ public class Main extends JFrame implements Runnable {
 	@Override
 	public void paint(Graphics g) {
 		buffimg = createImage(f_width, f_height);
-		for (int i = 0; i < humanG.length; i++) 
+		for (int i = 0; i < humanG.length; i++)
 			humanG[i] = buffimg.getGraphics();
-		for (int i = 0; i < monsterG.length; i++) 
+		for (int i = 0; i < monsterG.length; i++)
 			monsterG[i] = buffimg.getGraphics();
-		for (int i = 0; i < skillG.length; i++) 
+		for (int i = 0; i < skillG.length; i++)
 			skillG[i] = buffimg.getGraphics();
-		
 
 		update(g);
 	}
@@ -78,11 +73,14 @@ public class Main extends JFrame implements Runnable {
 		for (int i = 0; i < playerList.size(); i++) {
 			
 			p = (Player) playerList.get(i);
-			if(p.keySpace){
+			if(tmpB){
+			if(p.keySpace && p.attatckOnOff){
+				System.out.println("123");
 				p.DrawAttack(humanG[i], this);
 				//p.attack();
 			}else 
 				p.Draw_human(humanG[i], this);
+			}
 			
 		}
 
@@ -102,9 +100,11 @@ public class Main extends JFrame implements Runnable {
 				for (int i = 0; i < playerList.size(); i++) {
 					p = (Player) playerList.get(i);
 					p.keyProcess();
+					p.attackCount++;
+					if (p.attackCount > 100) {
+						p.attatckOnOff = true;
+					}
 				}
-				
-				System.out.println(skilltimer.i);
 				repaint();
 				Thread.sleep(20);
 				count++;
@@ -113,8 +113,6 @@ public class Main extends JFrame implements Runnable {
 			}
 		}
 	}
-	
-	
 
 	public static int ImageWidthValue(String file) {
 		int x = 0;
