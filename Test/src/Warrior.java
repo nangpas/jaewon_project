@@ -14,9 +14,9 @@ public class Warrior extends Player {
 		super(x, y);
 		hp = 500;
 		barrier = 150;
-		speedOfAttack = 20;
+		speedOfAttack = 25;
 		speedOfPlayer = 5;
-		power = 2;
+		power = 0.2;
 		humanImg = new ImageIcon("캐릭터 기본.png").getImage();
 		attackImg = new ImageIcon("캐릭터 공격.png").getImage();
 	}
@@ -25,9 +25,9 @@ public class Warrior extends Player {
 		super(0, 0);
 		hp = 500;
 		barrier = 150;
-		speedOfAttack = 20;
+		speedOfAttack = 25;
 		speedOfPlayer = 5;
-		power = 2;
+		power = 0.2;
 		humanImg = new ImageIcon("캐릭터 기본").getImage();
 	}
 
@@ -69,6 +69,35 @@ public class Warrior extends Player {
 			}
 			System.out.println(ms.hp);
 		}
+	}
+	
+	@Override
+	public void DrawAttack(Graphics g, ImageObserver frame) {
+
+		attatckOnOff = false;
+		attackCount = 0;
+
+		g.setClip(charX, charY, Main.ImageWidthValue("캐릭터 기본.png") / 9, Main.ImageHeigthValue("캐릭터 기본.png") / 4);
+
+		if (attackcnt >= 0 && attackcnt < 1) {
+			g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 0),
+					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
+		} else if (attackcnt >= 1 && attackcnt < 2) {
+			g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 1),
+					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
+		} else if (attackcnt >= 2 && attackcnt < 3) {
+			g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 2),
+					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
+		} else if (attackcnt >= 3 && attackcnt < 4) {
+			g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 3),
+					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
+		} else if (attackcnt >= 4 && attackcnt < 5) {
+			g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 4),
+					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
+		} else if (attackcnt >= 5 && attackcnt < 6) {
+			g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 5),
+					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
+		} 
 	}
 
 	@Override
@@ -142,8 +171,6 @@ public class Warrior extends Player {
 				moveStatus = 3;
 			}
 		}
-		
-	
 
 	}
 
@@ -231,130 +258,5 @@ public class Warrior extends Player {
 	}
 
 	
-	@Override
-	public void DrawAttack(Graphics g, ImageObserver frame) {
-		Main.tmpB = false;
-		int x = 0;
-		attatckOnOff = false;
-		attackCount = 0;
-		skilltimer = new Skilltimer();
-		skilltimer.start();
-		
-		while (true) {
-			System.out.println(skilltimer.i);
-			g.setClip(charX, charY, Main.ImageWidthValue("캐릭터 기본.png") / 9, Main.ImageHeigthValue("캐릭터 기본.png") / 4);
-			//g.setClip(300,300,500,500);
-			switch (moveStatus) {
-			case 0:
-				
-				if (skilltimer.i  % 6 == 0) {
-					Main.humanG[0].drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 0),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i  % 6 == 1) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 1),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i  % 6 == 2) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 2),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i  % 6 == 3) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 3),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i  % 6 == 4) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 4),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i  % 6 == 5) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 5),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 8),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				}
-				
-			//	g.drawRect(300, 300, 300, 300);
-				break;
-			case 2:
-				if (skilltimer.i / 5 % 6 == 0) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 0),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 1) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 1),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 2) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 2),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 3) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 3),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 4) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 4),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 5) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 5),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 8),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				}
-				break;
-			case 1:
-				if (skilltimer.i / 5 % 6 == 0) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 0),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 1) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 1),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 2) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 2),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 3) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 3),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 4) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 4),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 5) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 5),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 8),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				}
-				break;
-			case 3:
-				if (skilltimer.i / 5 % 6 == 0) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 0),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 1) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 1),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 2) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 2),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 3) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 3),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 4) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 4),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else if (skilltimer.i / 5 % 6 == 5) {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 5),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				} else {
-					g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 8),
-							charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
-				}
-				break;
-			}
-			
-			x++;
-			if(x == 7){
-				Main.tmpB = false;
-				break;
-			}
-				
-			
-			
-		}
-	}
 
 }

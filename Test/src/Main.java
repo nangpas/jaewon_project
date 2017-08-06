@@ -20,7 +20,6 @@ public class Main extends JFrame implements Runnable {
 	public static int prist = 2;
 	public static int magication = 3;
 
-	public static boolean tmpB = true;
 
 	Image buffimg;
 
@@ -70,26 +69,28 @@ public class Main extends JFrame implements Runnable {
 
 	@Override
 	public void update(Graphics g) {
-		for (int i = 0; i < playerList.size(); i++) {
-			
-			p = (Player) playerList.get(i);
-			if(tmpB){
-			if(p.keySpace && p.attatckOnOff){
-				System.out.println("123");
-				p.DrawAttack(humanG[i], this);
-				//p.attack();
-			}else 
-				p.Draw_human(humanG[i], this);
-			}
-			
-		}
-
+		
 		for (int i = 0; i < monsterList.size(); i++) {
 			ms = (Monster) monsterList.get(i);
 			ms.Draw_monster(monsterG[i], this);
 			ms.monsterMove();
 		}
-
+		for (int i = 0; i < playerList.size(); i++) {
+			p = (Player) playerList.get(i);
+			if(p.keySpace && p.attatckOnOff)
+				p.attackOn = true;
+			if(p.attackOn){
+				p.DrawAttack(humanG[i], this);
+				p.attackcnt += 0.4;
+				p.attack();
+				if(p.attackcnt > 6){
+					p.attackcnt = 0;
+					p.attackOn = false;
+				}
+			}
+			else 
+				p.Draw_human(humanG[i], this);
+			}
 		g.drawImage(buffimg, 0, 0, this);
 	}
 
@@ -101,7 +102,7 @@ public class Main extends JFrame implements Runnable {
 					p = (Player) playerList.get(i);
 					p.keyProcess();
 					p.attackCount++;
-					if (p.attackCount > 100) {
+					if (p.attackCount > p.speedOfAttack) {
 						p.attatckOnOff = true;
 					}
 				}
@@ -145,7 +146,6 @@ public class Main extends JFrame implements Runnable {
 
 		Rectangle h = img2.getClipBounds();
 
-		System.out.println(h);
 
 		if (Math.abs((x1 + r.width / 2) - (x2 + h.width / 2)) < (h.width / 2 + r.width / 2)
 				&& Math.abs((y1 + r.height / 2) - (y2 + h.height / 2)) < (h.height / 2 + r.height / 2)) {

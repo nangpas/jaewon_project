@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 
 public class Monster {
 	int x,y; //ÁÂÇ¥
-	int hp; 
+	double hp; 
 	
 	Image monsterImg;
 	

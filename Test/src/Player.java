@@ -8,10 +8,17 @@ abstract class Player implements KeyListener {
 
 	int charX, charY;
 
-	int hp, power, speedOfAttack, speedOfPlayer, barrier;
+	double hp, power, speedOfAttack, speedOfPlayer, barrier;
 
 	int moveStatus;
 	int attackCount = 0; 
+	
+	
+	
+	double attackcnt = 0;
+	boolean attackOn = false;
+	
+	
 	
 	Image humanImg;
 	Image attackImg;
