@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.ImageObserver;
@@ -6,10 +7,12 @@ import java.awt.image.ImageObserver;
 import javax.swing.ImageIcon;
 
 public class Warrior extends Player {
-
+	
 	Skilltimer skilltimer;
 	Monster ms;
-
+	Image[] shieldBlock;
+	
+	
 	public Warrior(int x, int y) {
 		super(x, y);
 		hp = 500;
@@ -19,6 +22,11 @@ public class Warrior extends Player {
 		power = 0.2;
 		humanImg = new ImageIcon("캐릭터 기본.png").getImage();
 		attackImg = new ImageIcon("캐릭터 공격.png").getImage();
+		
+		
+		shieldBlock = new Image[4];
+		for (int i = 0; i < shieldBlock.length; ++i)
+			shieldBlock[i] = new ImageIcon("방패박기" + i + ".png").getImage();
 	}
 
 	public Warrior() {
@@ -29,6 +37,11 @@ public class Warrior extends Player {
 		speedOfPlayer = 5;
 		power = 0.2;
 		humanImg = new ImageIcon("캐릭터 기본").getImage();
+		
+		shieldBlock = new Image[4];
+		for (int i = 0; i < shieldBlock.length; ++i)
+			shieldBlock[i] = new ImageIcon("방패박기" + i + ".png").getImage();
+		
 	}
 
 	@Override
@@ -101,8 +114,9 @@ public class Warrior extends Player {
 	}
 
 	@Override
+	//방패 막기 스킬
 	public void skill0() {
-
+		
 	}
 
 	@Override
