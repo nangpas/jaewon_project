@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class Main extends JFrame implements Runnable {
@@ -20,19 +21,21 @@ public class Main extends JFrame implements Runnable {
 	public static int prist = 2;
 	public static int magication = 3;
 
-
 	Image buffimg;
 
 	public static Graphics humanG[] = new Graphics[playercount];
 	public static Graphics monsterG[] = new Graphics[playercount];
-	public static Graphics skillG[] = new Graphics[playercount];
+	public static Graphics skillG[] = new Graphics[4];
 
+	
 	public static ArrayList playerList = new ArrayList();
 	public static ArrayList monsterList = new ArrayList();
 
 	public static Player p;
 	public static Monster ms;
+	
 
+	
 	Thread th;
 
 	public Main() {
@@ -41,7 +44,12 @@ public class Main extends JFrame implements Runnable {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		p = new Warrior(300, 300);
 		playerList.add(p);
-		addKeyListener(p);
+		
+		for (int i = 0; i < playerList.size(); i++) {
+			p = (Player) playerList.get(i);
+			addKeyListener(p);
+		}
+		
 
 		for (int i = 0; i < playercount; i++) {
 			ms = new Monster(600, 250);
@@ -70,29 +78,57 @@ public class Main extends JFrame implements Runnable {
 	@Override
 	public void update(Graphics g) {
 		
+		
+		
 		for (int i = 0; i < monsterList.size(); i++) {
 			ms = (Monster) monsterList.get(i);
 			ms.Draw_monster(monsterG[i], this);
 			ms.monsterMove();
 		}
+		
+		
+		
 		for (int i = 0; i < playerList.size(); i++) {
 			p = (Player) playerList.get(i);
-			if(p.keySpace && p.attatckOnOff)
-				p.attackOn = true;
-			if(p.attackOn){
+			if (p.keySpace && p.attatckOnOff)
+				p.attatckOn = true;
+			if(p.attatckOn){
 				p.DrawAttack(humanG[i], this);
-				p.attackcnt += 0.4;
+				p.attackcnt += 0.48;
 				p.attack();
-				if(p.attackcnt > 6){
+				if (p.attackcnt > 6) {
 					p.attackcnt = 0;
-					p.attackOn = false;
+					p.attatckOn = false;
+				}
+			} else
+				p.Draw_human(humanG[i], this);
+			
+			if(p.keyA && p.skill0OnOff){
+				p.skill0On = true;
+				p.skill0X = p.charX;
+				p.skill0Y = p.charY;
+			}
+			
+			if(p.skill0On){
+				p.DrawSkill0(skillG[0], this);
+				p.skill0cnt += 0.4;
+				if (p.skill0cnt > 6) {
+					p.skill0time -= 0.2;
+					if(p.skill0time < 0){
+						p.skill0cnt = 0;
+						p.skill0On = false;
+						p.skill0time = 50;
+					}
 				}
 			}
-			else 
-				p.Draw_human(humanG[i], this);
-			}
+			
+		}
+
 		g.drawImage(buffimg, 0, 0, this);
 	}
+	
+	
+	
 
 	@Override
 	public void run() {
@@ -102,9 +138,12 @@ public class Main extends JFrame implements Runnable {
 					p = (Player) playerList.get(i);
 					p.keyProcess();
 					p.attackCount++;
-					if (p.attackCount > p.speedOfAttack) {
+					p.skill0Count++;
+					if (p.attackCount > p.speedOfAttack) 
 						p.attatckOnOff = true;
-					}
+					if(p.skill0Count > 20)
+						p.skill0OnOff = true;
+
 				}
 				repaint();
 				Thread.sleep(20);
@@ -146,7 +185,6 @@ public class Main extends JFrame implements Runnable {
 
 		Rectangle h = img2.getClipBounds();
 
-
 		if (Math.abs((x1 + r.width / 2) - (x2 + h.width / 2)) < (h.width / 2 + r.width / 2)
 				&& Math.abs((y1 + r.height / 2) - (y2 + h.height / 2)) < (h.height / 2 + r.height / 2)) {
 			check = true;
@@ -162,6 +200,22 @@ public class Main extends JFrame implements Runnable {
 		boolean check = false;
 		Rectangle r = img1.getClipBounds();
 		Rectangle h = img2.getClipBounds();
+
+		if (Math.abs((x1 + r.width / 2) - (x2 + h.width / 2)) < (h.width / 2 + r.width / 2)
+				&& Math.abs((y1 + r.height / 2) - (y2 + h.height / 2)) < (h.height / 2 + r.height / 2)) {
+			check = true;
+		} else {
+			check = false;
+		}
+		return check;
+	}
+
+	public static boolean Crash(int x1, int y1, int x2, int y2, Image img1, Image img2) {
+
+		boolean check = false;
+
+		Rectangle r = new Rectangle(x1, y1, img1.getHeight(null), img1.getHeight(null));
+		Rectangle h = new Rectangle(x2, y2, img2.getHeight(null), img2.getHeight(null));
 
 		if (Math.abs((x1 + r.width / 2) - (x2 + h.width / 2)) < (h.width / 2 + r.width / 2)
 				&& Math.abs((y1 + r.height / 2) - (y2 + h.height / 2)) < (h.height / 2 + r.height / 2)) {
