@@ -12,11 +12,12 @@ public class Warrior extends Player {
 	Skilltimer skilltimer;
 
 	Image[] shieldBlock;
-
+	Image[] hpIncrease;
+	
 	public Warrior(int x, int y) {
 		super(x, y);
 		hp = 500;
-		barrier = 150;
+		barrier = 200;
 		speedOfAttack = 25;
 		speedOfPlayer = 5;
 		power = 0.2;
@@ -26,12 +27,16 @@ public class Warrior extends Player {
 		shieldBlock = new Image[5];
 		for (int i = 0; i < shieldBlock.length; ++i)
 			shieldBlock[i] = new ImageIcon("보호막" + i + ".png").getImage();
+		
+		hpIncrease = new Image[7];
+		for (int i = 0; i < hpIncrease.length; ++i)
+			hpIncrease[i] =  new ImageIcon("체력 스킬 " + i + ".png").getImage();
 	}
 
 	public Warrior() {
 		super(0, 0);
 		hp = 500;
-		barrier = 150;
+		barrier = 5;
 		speedOfAttack = 25;
 		speedOfPlayer = 5;
 		power = 0.2;
@@ -82,6 +87,7 @@ public class Warrior extends Player {
 			System.out.println(Main.mon.hp);
 		}
 	}
+	
 
 	@Override
 	public void DrawAttack(Graphics g, ImageObserver frame) {
@@ -115,20 +121,18 @@ public class Warrior extends Player {
 	@Override
 	// 방패 막기 스킬 충돌
 	public void skill0() {
-		Point r;
-		Point h;
 		for(int i = 0; i < Main.missileList.size(); ++i){
 			Main.ms = (Missile) Main.missileList.get(i);
-			r = new Point(Main.ms.startX, Main.ms.startY);
-			
-			
+			if(Main.Crash(Main.ms.startX , Main.ms.startY ,skill0X-111, skill0Y-111, Main.ms.msImg, shieldBlock[4], 0)){
+				Main.missileList.remove(i);
+				barrier--;
+			}
 		}
 	}
 
 	@Override
 	public void DrawSkill0(Graphics g, ImageObserver frame) {
 		
-
 		skill0OnOff = false;
 		skill0Count = 0;
 		
@@ -142,6 +146,7 @@ public class Warrior extends Player {
 			g.drawImage(shieldBlock[3], skill0X-72, skill0Y-72, frame);
 		else {
 			g.drawImage(shieldBlock[4], skill0X-111, skill0Y-111, frame);
+			skill0();
 		}
 
 	}
@@ -151,9 +156,25 @@ public class Warrior extends Player {
 
 	}
 
+	//전체 체력 증가 스킬
 	@Override
-	public void DrawSkill1() {
-
+	public void DrawSkill1(Graphics g, ImageObserver frame) {
+		
+		if (skill1cnt >= 0 && skill1cnt < 1)
+			g.drawImage(hpIncrease[0], charX+8, charY-18, frame);
+		else if (skill1cnt >= 1 && skill1cnt < 2)
+			g.drawImage(hpIncrease[1], charX+8, charY-18, frame);
+		else if (skill1cnt >= 2 && skill1cnt < 3)
+			g.drawImage(hpIncrease[2], charX+8, charY-18, frame);
+		else if (skill1cnt >= 3 && skill1cnt < 4)
+			g.drawImage(hpIncrease[3], charX+8, charY-18, frame);
+		else if(skill1cnt >= 4 && skill1cnt < 6){
+			g.drawImage(hpIncrease[4], charX+8, charY-18, frame);
+		}else if(skill1cnt >= 6 && skill1cnt < 9){
+			g.drawImage(hpIncrease[5], charX+8, charY-18, frame);
+		}else{
+			g.drawImage(hpIncrease[6],  charX+8, charY-18, frame);
+		}
 	}
 
 	@Override
@@ -162,7 +183,7 @@ public class Warrior extends Player {
 	}
 
 	@Override
-	public void DrawSkill2() {
+	public void DrawSkill2(Graphics g, ImageObserver frame) {
 
 	}
 
@@ -179,7 +200,7 @@ public class Warrior extends Player {
 	}
 
 	@Override
-	public void DrawSkill3() {
+	public void DrawSkill3(Graphics g, ImageObserver frame) {
 		// TODO Auto-generated method stub
 		
 	}

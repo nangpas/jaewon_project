@@ -26,6 +26,7 @@ public class Main extends JFrame implements Runnable {
 	public static Graphics humanG[] = new Graphics[playercount];
 	public static Graphics monsterG[] = new Graphics[playercount];
 	public static Graphics skillG[] = new Graphics[4];
+
 	public static Graphics missileG;
 
 	public static ArrayList playerList = new ArrayList();
@@ -107,13 +108,25 @@ public class Main extends JFrame implements Runnable {
 			if (p.skill0On) {
 				p.DrawSkill0(skillG[0], this);
 				p.skill0cnt += 0.4;
-				if (p.skill0cnt > 6) {
+				if (p.skill0cnt > 4) {
 					p.skill0time -= 0.2;
-					if (p.skill0time < 0) {
+					if (p.skill0time < 0 || p.barrier <= 0) {
 						p.skill0cnt = 0;
 						p.skill0On = false;
 						p.skill0time = 50;
+						p.barrier = 200;
 					}
+				}
+			}
+
+			if (p.keyD && p.skill1OnOff)
+				p.skill1On = true;
+			if (p.skill1On) {
+				p.DrawSkill1(skillG[1], this);
+				p.skill1cnt += 0.15;
+				if (p.skill1cnt > 10) {
+					p.skill1cnt = 0;
+					p.skill1On = false;
 				}
 			}
 
@@ -137,12 +150,13 @@ public class Main extends JFrame implements Runnable {
 					p.skill0Count++;
 					if (p.attackCount > p.speedOfAttack)
 						p.attatckOnOff = true;
-					if (p.skill0Count > 20)
+					if (p.skill0Count > 5)
 						p.skill0OnOff = true;
-
+					if (p.skill1Count > 5)
+						p.skill1OnOff = true;
 				}
 				repaint();
-				Thread.sleep(20);
+				Thread.sleep(10);
 				count++;
 
 			} catch (Exception e) {
@@ -206,38 +220,34 @@ public class Main extends JFrame implements Runnable {
 		return check;
 	}
 
-	public static boolean Crash(int x1, int y1, int x2, int y2, Image img1, Image img2) {
-
-		boolean check = false;
-
-		Rectangle r = new Rectangle(x1, y1, img1.getHeight(null), img1.getHeight(null));
-		Rectangle h = new Rectangle(x2, y2, img2.getHeight(null), img2.getHeight(null));
-
-		if (Math.abs((x1 + r.width / 2) - (x2 + h.width / 2)) < (h.width / 2 + r.width / 2)
-				&& Math.abs((y1 + r.height / 2) - (y2 + h.height / 2)) < (h.height / 2 + r.height / 2)) {
-			check = true;
-		} else {
-			check = false;
-		}
-		return check;
-	}
-
-	public static boolean Crash(Point x, Point y, Image img1, Image img2) {
+	public static boolean Crash(int x1, int y1, int x2, int y2, Image img1, Image img2, int x) {
 
 		boolean check = false;
 		double a;
 
-		Rectangle r = new Rectangle(x.x, x.y, img1.getHeight(null), img1.getHeight(null));
-		Rectangle h = new Rectangle(y.x, y.y, img2.getHeight(null), img2.getHeight(null));
+		Rectangle r = new Rectangle(x1, y1, img1.getHeight(null), img1.getHeight(null));
+		Rectangle h = new Rectangle(x2, y2, img2.getHeight(null), img2.getHeight(null));
 
-		a = Math.sqrt((r.x - h.x) * (r.x - h.x) + (r.y - h.y) * (r.y - h.y));
-
-		if ((r.width / 2 + h.width / 2) > a) {
-			check = true;
+		if (x == 1) {
+			if (Math.abs((x1 + r.width / 2) - (x2 + h.width / 2)) < (h.width / 2 + r.width / 2)
+					&& Math.abs((y1 + r.height / 2) - (y2 + h.height / 2)) < (h.height / 2 + r.height / 2)) {
+				check = true;
+			} else {
+				check = false;
+			}
 		} else {
-			check = false;
+
+			a = Math.sqrt(((x1 + 12) - (x2 + 140)) * ((x1 + 12) - (x2 + 140))
+					+ ((y1 + 12) - (y2 + 140)) * ((y1 + 12) - (y2 + 140)));
+
+			if ((r.width / 2 + h.width / 2) > a) {
+				check = true;
+			} else {
+				check = false;
+			}
 		}
 		return check;
+
 	}
 
 	public static void main(String[] args) {

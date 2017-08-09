@@ -72,7 +72,7 @@ public class Missile {
 	
 	
 	public void move() {
-		System.out.println("그려졋고 움직임");
+		
 		if (direction == 0) {
 			startY -= 8 * msSpeed;
 		} else if (direction == 1) {
@@ -82,7 +82,6 @@ public class Missile {
 		} else if (direction == 3) {
 			startX -= 8 * msSpeed;
 		} else if (direction == 5) {
-			System.out.println(plusX);
 			startX += plusX * msSpeed;
 			startY += plusY * msSpeed;
 		}

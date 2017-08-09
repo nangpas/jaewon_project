@@ -20,13 +20,25 @@ abstract class Player implements KeyListener {
 	boolean attatckOn = false; // 공격을 했다는 표시
 	boolean attatckOnOff = true; // 공격 가능 여부 (카운터 값으로 일정 시간이 되면 공격이 가능) 쿨타임 같은거
 
-	// 스킬 1 관련 값들
-	double skill0time = 10;
+	// 스킬 0 관련 값들
+	double skill0time = 50;
 	double skill0cnt = 0;
 	int skill0Count = 0;
 	int skill0X = 0, skill0Y = 0;
 	boolean skill0On = false;
-	boolean skill0OnOff = true; // 스킬 사용 가능 여부 (카운터 값으로 일정 시간이 되면 공격이 가능) 쿨타임
+	boolean skill0OnOff = true;
+	
+	
+	// 스킬 1 관련 값들
+	double skill1cnt = 0;
+	int skill1Count = 0;
+	boolean skill1On = false;
+	boolean skill1OnOff = true;
+
+	
+	
+	
+	 // 스킬 사용 가능 여부 (카운터 값으로 일정 시간이 되면 공격이 가능) 쿨타임
 								// 같은거
 
 	Image humanImg;
@@ -225,13 +237,13 @@ abstract class Player implements KeyListener {
 
 	public abstract void skill1(); // 스킬 123
 
-	public abstract void DrawSkill1();
+	public abstract void DrawSkill1(Graphics g, ImageObserver frame);
 
 	public abstract void skill2();
 
-	public abstract void DrawSkill2();
+	public abstract void DrawSkill2(Graphics g, ImageObserver frame);
 
 	public abstract void skill3();
 
-	public abstract void DrawSkill3();
+	public abstract void DrawSkill3(Graphics g, ImageObserver frame);
 }
