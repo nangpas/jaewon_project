@@ -4,38 +4,38 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.ImageObserver;
 
+import javax.swing.ImageIcon;
+
 abstract class Player implements KeyListener {
-	Monster ms; 
+
 	int charX, charY;
 
 	double hp, power, speedOfAttack, speedOfPlayer, barrier;
 
 	int moveStatus;
-	
-	
-	
-	//기본공격 관련 값들
+
+	// 기본공격 관련 값들
 	int attackCount = 0; // 이값이 몇 이상이 되면 공격을 사용가능
 	double attackcnt = 0; // 공격의 속도
 	boolean attatckOn = false; // 공격을 했다는 표시
 	boolean attatckOnOff = true; // 공격 가능 여부 (카운터 값으로 일정 시간이 되면 공격이 가능) 쿨타임 같은거
-	
-	//스킬 1 관련 값들
+
+	// 스킬 1 관련 값들
 	double skill0time = 10;
 	double skill0cnt = 0;
 	int skill0Count = 0;
 	int skill0X = 0, skill0Y = 0;
 	boolean skill0On = false;
-	boolean skill0OnOff = true; // 스킬 사용 가능 여부 (카운터 값으로 일정 시간이 되면 공격이 가능) 쿨타임 같은거
-	
-	
+	boolean skill0OnOff = true; // 스킬 사용 가능 여부 (카운터 값으로 일정 시간이 되면 공격이 가능) 쿨타임
+								// 같은거
+
 	Image humanImg;
 	Image attackImg;
 	Image skill0Img;
 	Image skill1Img;
 	Image skill2Img;
 	Image skill3Img;
-	
+
 	boolean keyUp = false;
 	boolean keyDown = false;
 	boolean keyLeft = false;
@@ -48,7 +48,6 @@ abstract class Player implements KeyListener {
 
 	boolean playerMove = false;
 
-	
 	public Player() {
 		charX = 50;
 		charY = 50;
@@ -63,7 +62,7 @@ abstract class Player implements KeyListener {
 
 	public void Draw_human(Graphics g, ImageObserver frame) {
 
-		g.setClip(charX, charY,64, 64);
+		g.setClip(charX, charY, 64, 64);
 
 		if (playerMove) {
 			if (Main.count / 5 % 9 == 0) {
@@ -98,15 +97,12 @@ abstract class Player implements KeyListener {
 			g.drawImage(humanImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 8),
 					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
 	}
-	
-	
-	public abstract void skillProcess();
-	
 
+	public abstract void skillProcess();
 
 	public void keyProcess() {
 		playerMove = false;
-		
+
 		if (keyUp) {
 			playerMove = true;
 			if (charY > 25) {
@@ -134,6 +130,12 @@ abstract class Player implements KeyListener {
 				charX += speedOfPlayer;
 				moveStatus = 3;
 			}
+		}
+
+		if (keyS) {
+				Image img = new ImageIcon("star.png").getImage();
+				Main.ms = new Missile(Main.mon.x, Main.mon.y, charX, charY, 2, img);
+				Main.missileList.add(Main.ms);
 		}
 	}
 
@@ -180,7 +182,7 @@ abstract class Player implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		
+
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
 			keyLeft = false;
@@ -213,20 +215,23 @@ abstract class Player implements KeyListener {
 
 	}
 
-	
-
 	public abstract void attack();
+
 	public abstract void DrawAttack(Graphics g, ImageObserver frame);
-	
+
 	public abstract void skill0(); // 기본기
+
 	public abstract void DrawSkill0(Graphics g, ImageObserver frame);
-	
+
 	public abstract void skill1(); // 스킬 123
+
 	public abstract void DrawSkill1();
-	
+
 	public abstract void skill2();
+
 	public abstract void DrawSkill2();
-	
+
 	public abstract void skill3();
+
 	public abstract void DrawSkill3();
 }

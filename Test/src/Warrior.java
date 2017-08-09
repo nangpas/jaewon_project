@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.ImageObserver;
@@ -47,38 +48,38 @@ public class Warrior extends Player {
 		Rectangle tmpRect;
 
 		for (int i = 0; i < Main.monsterList.size(); i++) {
-			ms = (Monster) Main.monsterList.get(i);
+			Main.mon = (Monster) Main.monsterList.get(i);
 			switch (moveStatus) {
 			case 0:
 				tmpRect = new Rectangle(charX + 8, charY - 13, 48, 25);
-				if (Main.Crash(tmpRect, ms.x, ms.y, Main.monsterG[i]))
-					ms.hp -= power;
-				if (ms.hp <= 0)
+				if (Main.Crash(tmpRect, Main.mon.x, Main.mon.y, Main.monsterG[i]))
+					Main.mon.hp -= power;
+				if (Main.mon.hp <= 0)
 					Main.monsterList.remove(i);
 				break;
 			case 2:
 				tmpRect = new Rectangle(charX + 8, charY + 56, 48, 25);
-				if (Main.Crash(tmpRect, ms.x, ms.y, Main.monsterG[i]))
-					ms.hp -= power;
-				if (ms.hp <= 0)
+				if (Main.Crash(tmpRect, Main.mon.x, Main.mon.y, Main.monsterG[i]))
+					Main.mon.hp -= power;
+				if (Main.mon.hp <= 0)
 					Main.monsterList.remove(i);
 				break;
 			case 1:
 				tmpRect = new Rectangle(charX - 15, charY + 8, 25, 48);
-				if (Main.Crash(tmpRect, ms.x, ms.y, Main.monsterG[i]))
-					ms.hp -= power;
-				if (ms.hp <= 0)
+				if (Main.Crash(tmpRect, Main.mon.x, Main.mon.y, Main.monsterG[i]))
+					Main.mon.hp -= power;
+				if (Main.mon.hp <= 0)
 					Main.monsterList.remove(i);
 				break;
 			case 3:
 				tmpRect = new Rectangle(charX + 54, charY + 8, 25, 48);
-				if (Main.Crash(tmpRect, ms.x, ms.y, Main.monsterG[i]))
-					ms.hp -= power;
-				if (ms.hp <= 0)
+				if (Main.Crash(tmpRect, Main.mon.x, Main.mon.y, Main.monsterG[i]))
+					Main.mon.hp -= power;
+				if (Main.mon.hp <= 0)
 					Main.monsterList.remove(i);
 				break;
 			}
-			System.out.println(ms.hp);
+			System.out.println(Main.mon.hp);
 		}
 	}
 
@@ -114,7 +115,14 @@ public class Warrior extends Player {
 	@Override
 	// 방패 막기 스킬 충돌
 	public void skill0() {
-
+		Point r;
+		Point h;
+		for(int i = 0; i < Main.missileList.size(); ++i){
+			Main.ms = (Missile) Main.missileList.get(i);
+			r = new Point(Main.ms.startX, Main.ms.startY);
+			
+			
+		}
 	}
 
 	@Override
