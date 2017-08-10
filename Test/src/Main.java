@@ -88,7 +88,27 @@ public class Main extends JFrame implements Runnable {
 
 		for (int i = 0; i < playerList.size(); i++) {
 			p = (Player) playerList.get(i);
+			
 			p.DrawHp(hpG, this);
+			
+			if(p.keyF && p.skill2OnOff) {
+				p.skill2On = true;
+				p.skill2direct = p.moveStatus;
+				p.skill2X = p.charX;
+				p.skill2Y = p.charY;
+			}
+			if (p.skill2On) {
+				System.out.println(p.skill2OnOff);
+				p.DrawSkill2(skillG[2], this);
+				p.skill2cnt += 0.15;
+				if (p.skill2cnt > 20) {
+					p.skill2();
+					p.skill2cnt = 0;
+					p.skill2On = false;
+				}
+			}
+			
+			
 			if (p.keySpace && p.attatckOnOff)
 				p.attatckOn = true;
 			if (p.attatckOn) {
@@ -128,12 +148,16 @@ public class Main extends JFrame implements Runnable {
 				p.DrawSkill1(skillG[1], this);
 				p.skill1cnt += 0.15;
 				if (p.skill1cnt > 10) {
+					
+					
 					p.skill1();
 					p.skill1cnt = 0;
 					p.skill1Count = 0;
 					p.skill1On = false;
 				}
 			}
+			
+			
 		}
 
 		if (missileList.size() != 0) {
@@ -155,16 +179,24 @@ public class Main extends JFrame implements Runnable {
 					p.attackCount++;
 					p.skill0Count++;
 					p.skill1Count++;
+					p.skill2Count++;
+					
 					if (p.attackCount > p.speedOfAttack)
 						p.attatckOnOff = true;
+					
 					if (p.skill0Count > 5)
 						p.skill0OnOff = true;
+					
 					if (p.skill1On != true && p.skill1Count == 100) {
 						p.maxHp -=500;
-						System.out.println(p.maxHp);
 					}
+					
 					if (p.skill1Count > 500)
 						p.skill1OnOff = true;
+					
+					if (p.skill2Count > 500)
+						p.skill2OnOff = true;
+					
 				}
 				repaint();
 				Thread.sleep(10);

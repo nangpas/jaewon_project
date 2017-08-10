@@ -28,19 +28,23 @@ abstract class Player implements KeyListener {
 	int skill0X = 0, skill0Y = 0;
 	boolean skill0On = false;
 	boolean skill0OnOff = true;
-	
-	
+
 	// 스킬 1 관련 값들
 	double skill1cnt = 0;
 	int skill1Count = 0;
 	boolean skill1On = false;
 	boolean skill1OnOff = true;
 
-	
-	
-	
-	 // 스킬 사용 가능 여부 (카운터 값으로 일정 시간이 되면 공격이 가능) 쿨타임
-								// 같은거
+	// 스킬 2 관련 값들
+	int skill2direct = 0;
+	int skill2X = 0, skill2Y = 0;
+	double skill2cnt = 0;
+	int skill2Count = 0;
+	boolean skill2On = false;
+	boolean skill2OnOff = true;
+
+	// 스킬 사용 가능 여부 (카운터 값으로 일정 시간이 되면 공격이 가능) 쿨타임
+	// 같은거
 
 	Image humanImg;
 	Image attackImg;
@@ -110,14 +114,13 @@ abstract class Player implements KeyListener {
 			g.drawImage(humanImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 8),
 					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
 	}
-	
-	
+
 	public void DrawHp(Graphics g, ImageObserver frame) {
 		g.setColor(Color.white);
-		g.fill3DRect(charX, charY, (int) maxHp/10, 5, true);
+		g.fill3DRect(charX, charY, (int) maxHp / 10, 5, true);
 		g.setColor(Color.red);
-		g.fill3DRect(charX, charY, (int) hp/10, 5, true);
-		
+		g.fill3DRect(charX, charY, (int) hp / 10, 5, true);
+
 	}
 
 	public abstract void skillProcess();
@@ -125,39 +128,42 @@ abstract class Player implements KeyListener {
 	public void keyProcess() {
 		playerMove = false;
 
-		if (keyUp) {
-			playerMove = true;
-			if (charY > 25) {
-				charY -= speedOfPlayer;
-				moveStatus = 0;
-			}
-		}
-		if (keyDown) {
-			playerMove = true;
-			if (charY < Main.f_height - 50) {
-				charY += speedOfPlayer;
-				moveStatus = 2;
-			}
-		}
-		if (keyLeft) {
-			playerMove = true;
-			if (charX > 0) {
-				charX -= speedOfPlayer;
-				moveStatus = 1;
-			}
-		}
-		if (keyRight) {
-			playerMove = true;
-			if (charX < Main.f_width - 25) {
-				charX += speedOfPlayer;
-				moveStatus = 3;
-			}
-		}
+		if (skill2On == false) {
 
-		if (keyS) {
+			if (keyUp) {
+				playerMove = true;
+				if (charY > 25) {
+					charY -= speedOfPlayer;
+					moveStatus = 0;
+				}
+			}
+			if (keyDown) {
+				playerMove = true;
+				if (charY < Main.f_height - 50) {
+					charY += speedOfPlayer;
+					moveStatus = 2;
+				}
+			}
+			if (keyLeft) {
+				playerMove = true;
+				if (charX > 0) {
+					charX -= speedOfPlayer;
+					moveStatus = 1;
+				}
+			}
+			if (keyRight) {
+				playerMove = true;
+				if (charX < Main.f_width - 25) {
+					charX += speedOfPlayer;
+					moveStatus = 3;
+				}
+			}
+
+			if (keyS) {
 				Image img = new ImageIcon("star.png").getImage();
 				Main.ms = new Missile(Main.mon.x, Main.mon.y, charX, charY, 2, img);
 				Main.missileList.add(Main.ms);
+			}
 		}
 	}
 
@@ -236,8 +242,6 @@ abstract class Player implements KeyListener {
 		}
 
 	}
-	
-	
 
 	public abstract void attack();
 
