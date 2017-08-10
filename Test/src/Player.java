@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -10,7 +11,7 @@ abstract class Player implements KeyListener {
 
 	int charX, charY;
 
-	double hp, power, speedOfAttack, speedOfPlayer, barrier;
+	double maxHp, hp, power, speedOfAttack, speedOfPlayer, barrier;
 
 	int moveStatus;
 
@@ -108,6 +109,15 @@ abstract class Player implements KeyListener {
 		} else
 			g.drawImage(humanImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 8),
 					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
+	}
+	
+	
+	public void DrawHp(Graphics g, ImageObserver frame) {
+		g.setColor(Color.white);
+		g.fill3DRect(charX, charY, (int) maxHp/10, 5, true);
+		g.setColor(Color.red);
+		g.fill3DRect(charX, charY, (int) hp/10, 5, true);
+		
 	}
 
 	public abstract void skillProcess();
@@ -226,6 +236,8 @@ abstract class Player implements KeyListener {
 		}
 
 	}
+	
+	
 
 	public abstract void attack();
 

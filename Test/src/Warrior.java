@@ -10,19 +10,21 @@ import javax.swing.ImageIcon;
 public class Warrior extends Player {
 
 	Skilltimer skilltimer;
-
-	Image[] shieldBlock;
+	
+	Image[][] WarriorDefault;
+	Image[][] WarriorAttack;
+	Image[] shieldBlock; 
 	Image[] hpIncrease;
 	
 	public Warrior(int x, int y) {
 		super(x, y);
+		maxHp = 500;
 		hp = 500;
 		barrier = 200;
 		speedOfAttack = 25;
 		speedOfPlayer = 5;
 		power = 0.2;
-		humanImg = new ImageIcon("전사 기본.png").getImage();
-		attackImg = new ImageIcon("전사 기본공격.png").getImage();
+
 
 		shieldBlock = new Image[5];
 		for (int i = 0; i < shieldBlock.length; ++i)
@@ -31,23 +33,75 @@ public class Warrior extends Player {
 		hpIncrease = new Image[7];
 		for (int i = 0; i < hpIncrease.length; ++i)
 			hpIncrease[i] =  new ImageIcon("체력 스킬 " + i + ".png").getImage();
+		
+		WarriorDefault = new Image[4][9];
+		for (int i = 0; i < WarriorDefault.length; ++i)
+			for (int j = 0; j < WarriorDefault[i].length; ++j)
+				WarriorDefault[i][j] = new ImageIcon("전사 기본 " + i + "_" + j +".png").getImage();
+		
+		WarriorAttack = new Image[4][6];
+		for (int i = 0; i < WarriorAttack.length; ++i)
+			for (int j = 0; j < WarriorAttack[i].length; ++j)
+				WarriorAttack[i][j] = new ImageIcon("전사 기본 공격 " + i + "_" + j +".png").getImage();
 	}
 
 	public Warrior() {
 		super(0, 0);
+		maxHp = 500;
 		hp = 500;
 		barrier = 5;
 		speedOfAttack = 25;
 		speedOfPlayer = 5;
 		power = 0.2;
-		humanImg = new ImageIcon("전사 기본").getImage();
 
 		shieldBlock = new Image[5];
 		for (int i = 0; i < shieldBlock.length; ++i)
 			shieldBlock[i] = new ImageIcon("보호막" + i + ".png").getImage();
-
+		
+		hpIncrease = new Image[7];
+		for (int i = 0; i < hpIncrease.length; ++i)
+			hpIncrease[i] =  new ImageIcon("체력 스킬 " + i + ".png").getImage();
+		
+		WarriorDefault = new Image[4][9];
+		for (int i = 0; i < WarriorDefault.length; ++i)
+			for (int j = 0; j < WarriorDefault[i].length; ++j)
+				WarriorDefault[i][j] = new ImageIcon("전사 기본 " + i + "_" + j +".png").getImage();
+		
+		WarriorAttack = new Image[4][6];
+		for (int i = 0; i < WarriorAttack.length; ++i)
+			for (int j = 0; j < WarriorAttack[i].length; ++j)
+				WarriorAttack[i][j] = new ImageIcon("전사 기본 공격 " + i + "_" + j +".png").getImage();
+		
 	}
-
+	
+	@Override
+	public void Draw_human(Graphics g, ImageObserver frame) {
+		
+		if (playerMove) {
+			if (Main.count / 5 % 9 == 0) {
+				g.drawImage(WarriorDefault[moveStatus][0], charX ,charY, frame);
+			} else if (Main.count / 5 % 9 == 1) {
+				g.drawImage(WarriorDefault[moveStatus][1], charX ,charY, frame);
+			} else if (Main.count / 5 % 9 == 2) {
+				g.drawImage(WarriorDefault[moveStatus][2], charX ,charY, frame);
+			} else if (Main.count / 5 % 9 == 3) {
+				g.drawImage(WarriorDefault[moveStatus][3], charX ,charY, frame);
+			} else if (Main.count / 5 % 9 == 4) {
+				g.drawImage(WarriorDefault[moveStatus][4], charX ,charY, frame);
+			} else if (Main.count / 5 % 9 == 5) {
+				g.drawImage(WarriorDefault[moveStatus][5], charX ,charY, frame);
+			} else if (Main.count / 5 % 9 == 6) {
+				g.drawImage(WarriorDefault[moveStatus][6], charX ,charY, frame);
+			} else if (Main.count / 5 % 9 == 7) {
+				g.drawImage(WarriorDefault[moveStatus][7], charX ,charY, frame);
+			} else {
+				g.drawImage(WarriorDefault[moveStatus][8], charX ,charY, frame);
+			}
+		} else
+			g.drawImage(WarriorDefault[moveStatus][0], charX ,charY, frame);
+	
+	}
+	
 	@Override
 	public void attack() {
 		Rectangle tmpRect;
@@ -98,24 +152,19 @@ public class Warrior extends Player {
 		g.setClip(charX, charY, Main.ImageWidthValue("캐릭터 기본.png") / 9, Main.ImageHeigthValue("캐릭터 기본.png") / 4);
 
 		if (attackcnt >= 0 && attackcnt < 1) {
-			g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 0),
-					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
+			g.drawImage(WarriorAttack[moveStatus][0], charX, charY, frame);
 		} else if (attackcnt >= 1 && attackcnt < 2) {
-			g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 1),
-					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
+			g.drawImage(WarriorAttack[moveStatus][1], charX, charY, frame);
 		} else if (attackcnt >= 2 && attackcnt < 3) {
-			g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 2),
-					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
+			g.drawImage(WarriorAttack[moveStatus][2], charX, charY, frame);
 		} else if (attackcnt >= 3 && attackcnt < 4) {
-			g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 3),
-					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
+			g.drawImage(WarriorAttack[moveStatus][3], charX, charY, frame);
 		} else if (attackcnt >= 4 && attackcnt < 5) {
-			g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 4),
-					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
+			g.drawImage(WarriorAttack[moveStatus][4], charX, charY, frame);
 		} else if (attackcnt >= 5 && attackcnt < 6) {
-			g.drawImage(attackImg, charX - (Main.ImageWidthValue("캐릭터 기본.png") / 9 * 5),
-					charY - (Main.ImageHeigthValue("캐릭터 기본.png") / 4 * moveStatus), frame);
+			g.drawImage(WarriorAttack[moveStatus][5], charX, charY, frame);
 		}
+		
 	}
 
 	@Override
@@ -153,12 +202,15 @@ public class Warrior extends Player {
 
 	@Override
 	public void skill1() {
-
+		maxHp += 500;
 	}
 
 	//전체 체력 증가 스킬
 	@Override
 	public void DrawSkill1(Graphics g, ImageObserver frame) {
+		
+		skill1OnOff = false;
+		
 		
 		if (skill1cnt >= 0 && skill1cnt < 1)
 			g.drawImage(hpIncrease[0], charX+8, charY-18, frame);

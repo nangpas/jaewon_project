@@ -28,6 +28,7 @@ public class Main extends JFrame implements Runnable {
 	public static Graphics skillG[] = new Graphics[4];
 
 	public static Graphics missileG;
+	public static Graphics hpG;
 
 	public static ArrayList playerList = new ArrayList();
 	public static ArrayList monsterList = new ArrayList();
@@ -72,6 +73,7 @@ public class Main extends JFrame implements Runnable {
 		for (int i = 0; i < skillG.length; i++)
 			skillG[i] = buffimg.getGraphics();
 		missileG = buffimg.getGraphics();
+		hpG = buffimg.getGraphics();
 		update(g);
 	}
 
@@ -86,6 +88,7 @@ public class Main extends JFrame implements Runnable {
 
 		for (int i = 0; i < playerList.size(); i++) {
 			p = (Player) playerList.get(i);
+			p.DrawHp(hpG, this);
 			if (p.keySpace && p.attatckOnOff)
 				p.attatckOn = true;
 			if (p.attatckOn) {
@@ -125,16 +128,19 @@ public class Main extends JFrame implements Runnable {
 				p.DrawSkill1(skillG[1], this);
 				p.skill1cnt += 0.15;
 				if (p.skill1cnt > 10) {
+					p.skill1();
 					p.skill1cnt = 0;
+					p.skill1Count = 0;
 					p.skill1On = false;
 				}
 			}
-
 		}
 
 		if (missileList.size() != 0) {
 			ms.drawMissile(missileG, this);
 		}
+		
+		
 
 		g.drawImage(buffimg, 0, 0, this);
 	}
@@ -148,11 +154,16 @@ public class Main extends JFrame implements Runnable {
 					p.keyProcess();
 					p.attackCount++;
 					p.skill0Count++;
+					p.skill1Count++;
 					if (p.attackCount > p.speedOfAttack)
 						p.attatckOnOff = true;
 					if (p.skill0Count > 5)
 						p.skill0OnOff = true;
-					if (p.skill1Count > 5)
+					if (p.skill1On != true && p.skill1Count == 100) {
+						p.maxHp -=500;
+						System.out.println(p.maxHp);
+					}
+					if (p.skill1Count > 500)
 						p.skill1OnOff = true;
 				}
 				repaint();
