@@ -14,7 +14,18 @@ public class Warrior extends Player {
 	Image[] skill0Img;
 	Image[] skill1Img;
 	Image[][] skill2Img;
+	
+	
 
+	
+
+	
+
+	
+
+	
+	
+	
 	public Warrior(int x, int y) {
 		super(x, y);
 		maxHp = 500;
@@ -115,7 +126,7 @@ public class Warrior extends Player {
 		}
 	}
 
-	@Override
+
 	public void attack() {
 		Rectangle tmpRect;
 
@@ -155,10 +166,10 @@ public class Warrior extends Player {
 		}
 	}
 
-	@Override
+
 	public void DrawAttack(Graphics g, ImageObserver frame) {
 
-		attatckOnOff = false;
+		attackOnOff = false;
 		attackCount = 0;
 
 		g.setClip(charX, charY, Main.ImageWidthValue("캐릭터 기본.png") / 9, Main.ImageHeigthValue("캐릭터 기본.png") / 4);
@@ -179,7 +190,7 @@ public class Warrior extends Player {
 
 	}
 
-	@Override
+
 	// 방패 막기 스킬 충돌
 	public void skill0() {
 		for (int i = 0; i < Main.missileList.size(); ++i) {
@@ -192,7 +203,7 @@ public class Warrior extends Player {
 		}
 	}
 
-	@Override
+
 	public void DrawSkill0(Graphics g, ImageObserver frame) {
 
 		skill0OnOff = false;
@@ -213,17 +224,16 @@ public class Warrior extends Player {
 
 	}
 
-	@Override
+
 	public void skill1() {
 		maxHp += 500;
 	}
 
-	// 전체 체력 증가 스킬
-	@Override
+
 	public void DrawSkill1(Graphics g, ImageObserver frame) {
 
 		skill1OnOff = false;
-		System.out.println(maxHp);
+		skill1Count = 0;
 		
 		if (skill1cnt >= 0 && skill1cnt < 1)
 			g.drawImage(skill1Img[0], charX + 8, charY - 18, frame);
@@ -242,17 +252,17 @@ public class Warrior extends Player {
 		}
 	}
 
-	@Override
+
 	public void skill2() {
 
 	}
 
-	@Override
+
 	public void DrawSkill2(Graphics g, ImageObserver frame) {
 
 		skill2OnOff = false;
 		skill2Count = 0;
-
+		
 		switch (skill2direct) {
 
 		case 0:
@@ -287,6 +297,7 @@ public class Warrior extends Player {
 			else
 				g.drawImage(skill2Img[skill2direct][3], skill2X - 12, skill2Y + 60, frame);
 			break;
+			
 
 		case 3:
 			if (skill2cnt >= 0 && skill2cnt < 6)
@@ -302,27 +313,171 @@ public class Warrior extends Player {
 
 	}
 
-	@Override
+	
 	public void skill3() {
 
 	}
 
-	@Override
+	
 	public void skillProcess() {
-		// TODO Auto-generated method stub
+		
 
 	}
 
-	@Override
+	
 	public void DrawSkill3(Graphics g, ImageObserver frame) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void timer() {
+		if(attackOn)
+			attackcnt += 0.2;
+		if(attackcnt > 6)
+			attackOn = false;
+		attackCount++;
+		if(attackCount > 50){
+			attackOnOff = true;
+			attackcnt = 0;
+		}
+		
+		
+		if(skill0On)
+			skill0cnt += 0.2;
+		if(skill0cnt > 20)
+			skill0On = false;
+		skill0Count++;
+		if(skill0Count > 50){
+			skill0OnOff = true;
+			skill0cnt = 0;
+		}
+		
+		if(skill1On)
+			skill1cnt += 0.2;
+		if(skill1cnt > 20)
+			skill1On = false;
+		skill1Count++;
+		if(skill1Count > 50){
+			skill1OnOff = true;
+			skill1cnt = 0;
+		}
+		
+		if(skill2On)
+			skill2cnt += 0.2;
+		if(skill2cnt > 20)
+			skill2On = false;
+		skill2Count++;
+		if(skill2Count > 50){
+			skill2OnOff = true;
+			skill2cnt = 0;
+		}
+		
+		
+		if(skill3On)
+			skill3cnt += 0.2;
+		if(skill3cnt > 20)
+			skill3On = false;
+		skill2Count++;
+		if(skill3Count > 50){
+			skill3OnOff = true;
+			skill3cnt = 0;
+		}
+		
+	}
+
+	public void getAttack() {
+		attackdirect = moveStatus;
+		attackX = charX;
+		attackY = charY;
+	}
+
+	public void getSkill0() {
+		skill0direct = moveStatus;
+		skill0X = charX;
+		skill0Y = charY;
+	}
+
+	
+	public void getSkill1() {
+		skill1direct = moveStatus;
+		skill1X = charX;
+		skill1Y = charY;
+		
+	}
+
+	
+	public void getSkill2() {
+		skill2direct = moveStatus;
+		skill2X = charX;
+		skill2Y = charY;
+		
+	}
+
+	
+	public void getSkill3() {
+		skill3direct = moveStatus;
+		skill3X = charX;
+		skill3Y = charY;
+		
+	}
+
+	@Override
+	public void attackProcess(Player p, Graphics g, Graphics g1, ImageObserver frame) {
+		if(p.keySpace && p.attackOnOff){
+			p.attackOn = true;
+			getAttack();
+		}
+		if(p.attackOn)
+			DrawAttack(g, frame);
+		else
+			Draw_human(g1, frame);
+	}
+
+	@Override
+	public void skill0Process(Player p, Graphics g, Graphics g1, ImageObserver frame) {
+		if(p.keyA && p.skill0OnOff){
+			p.skill0On = true;
+			getSkill0();
+		}
+		if(p.skill0On)
+			DrawSkill0(g, frame);
+	}
+
+	@Override
+	public void skill1Process(Player p, Graphics g, Graphics g1, ImageObserver frame) {
+		if(p.keyS && p.skill1OnOff){
+			p.skill1On = true;
+			getSkill1();
+		}
+		if(p.skill1On)
+			DrawSkill1(g, frame);
+		
+	}
+
+	@Override
+	public void skill2Process(Player p, Graphics g, Graphics g1, ImageObserver frame) {
+		if(p.keyD && p.skill2OnOff){
+			p.skill2On = true;
+			getSkill2();
+		}
+		if(p.skill2On)
+			DrawSkill2(g, frame);
+	}
+
+	@Override
+	public void skill3Process(Player p, Graphics g, Graphics g1, ImageObserver frame) {
+		if(p.keyF && p.skill3OnOff){
+			p.skill3On = true;
+			getSkill3();
+		}
+		if(p.skill3On)
+			DrawSkill3(g, frame);
 	}
 
 }

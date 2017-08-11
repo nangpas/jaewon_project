@@ -3,11 +3,12 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+
 
 public class Main extends JFrame implements Runnable {
 
@@ -34,7 +35,7 @@ public class Main extends JFrame implements Runnable {
 	public static ArrayList monsterList = new ArrayList();
 	public static ArrayList missileList = new ArrayList();
 
-	public static Player p;
+	 public static Player p;
 	public static Monster mon;
 	public static Missile ms;
 
@@ -88,84 +89,17 @@ public class Main extends JFrame implements Runnable {
 
 		for (int i = 0; i < playerList.size(); i++) {
 			p = (Player) playerList.get(i);
-			
-			p.DrawHp(hpG, this);
-			
-			if(p.keyF && p.skill2OnOff) {
-				p.skill2On = true;
-				p.skill2direct = p.moveStatus;
-				p.skill2X = p.charX;
-				p.skill2Y = p.charY;
-			}
-			if (p.skill2On) {
-				System.out.println(p.skill2OnOff);
-				p.DrawSkill2(skillG[2], this);
-				p.skill2cnt += 0.15;
-				if (p.skill2cnt > 20) {
-					p.skill2();
-					p.skill2cnt = 0;
-					p.skill2On = false;
-				}
-			}
-			
-			
-			if (p.keySpace && p.attatckOnOff)
-				p.attatckOn = true;
-			if (p.attatckOn) {
-				p.DrawAttack(humanG[i], this);
-				p.attackcnt += 0.48;
-				p.attack();
-				if (p.attackcnt > 6) {
-					p.attackcnt = 0;
-					p.attatckOn = false;
-				}
-			} else
-				p.Draw_human(humanG[i], this);
-
-			if (p.keyA && p.skill0OnOff) {
-				p.skill0On = true;
-				p.skill0X = p.charX;
-				p.skill0Y = p.charY;
-			}
-
-			if (p.skill0On) {
-				p.DrawSkill0(skillG[0], this);
-				p.skill0cnt += 0.4;
-				if (p.skill0cnt > 4) {
-					p.skill0time -= 0.2;
-					if (p.skill0time < 0 || p.barrier <= 0) {
-						p.skill0cnt = 0;
-						p.skill0On = false;
-						p.skill0time = 50;
-						p.barrier = 200;
-					}
-				}
-			}
-
-			if (p.keyD && p.skill1OnOff)
-				p.skill1On = true;
-			if (p.skill1On) {
-				p.DrawSkill1(skillG[1], this);
-				p.skill1cnt += 0.15;
-				if (p.skill1cnt > 10) {
-					
-					
-					p.skill1();
-					p.skill1cnt = 0;
-					p.skill1Count = 0;
-					p.skill1On = false;
-				}
-			}
-			
-			
+			p.attackProcess(p, humanG[i], humanG[i], this);
+			p.skill0Process(p, skillG[i], humanG[i], this);
+			p.skill1Process(p, skillG[i], humanG[i], this);
+			p.skill2Process(p, skillG[i], humanG[i], this);
+			p.skill3Process(p, skillG[i], humanG[i], this);
 		}
 
 		if (missileList.size() != 0) {
 			ms.drawMissile(missileG, this);
 		}
 		
-		
-
 		g.drawImage(buffimg, 0, 0, this);
 	}
 
@@ -176,26 +110,7 @@ public class Main extends JFrame implements Runnable {
 				for (int i = 0; i < playerList.size(); i++) {
 					p = (Player) playerList.get(i);
 					p.keyProcess();
-					p.attackCount++;
-					p.skill0Count++;
-					p.skill1Count++;
-					p.skill2Count++;
-					
-					if (p.attackCount > p.speedOfAttack)
-						p.attatckOnOff = true;
-					
-					if (p.skill0Count > 5)
-						p.skill0OnOff = true;
-					
-					if (p.skill1On != true && p.skill1Count == 100) {
-						p.maxHp -=500;
-					}
-					
-					if (p.skill1Count > 500)
-						p.skill1OnOff = true;
-					
-					if (p.skill2Count > 500)
-						p.skill2OnOff = true;
+					p.timer();
 					
 				}
 				repaint();
@@ -290,7 +205,6 @@ public class Main extends JFrame implements Runnable {
 			}
 		}
 		return check;
-
 	}
 
 	public static void main(String[] args) {

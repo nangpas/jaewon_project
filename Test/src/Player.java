@@ -16,35 +16,49 @@ abstract class Player implements KeyListener {
 	int moveStatus;
 
 	// 기본공격 관련 값들
-	int attackCount = 0; // 이값이 몇 이상이 되면 공격을 사용가능
-	double attackcnt = 0; // 공격의 속도
-	boolean attatckOn = false; // 공격을 했다는 표시
-	boolean attatckOnOff = true; // 공격 가능 여부 (카운터 값으로 일정 시간이 되면 공격이 가능) 쿨타임 같은거
-
+	boolean attackOn = false; // 공격을 했다는 표시
+	boolean attackOnOff = true; // 공격 가능 여부 (카운터 값으로 일정 시간이 되면 공격이 가능) 쿨타임 같은거
+	double attackcnt = 0;
+	int attackX;
+	int attackY;
+	int attackdirect;
+	int attackCount = 0;
+	
 	// 스킬 0 관련 값들
-	double skill0time = 50;
-	double skill0cnt = 0;
-	int skill0Count = 0;
-	int skill0X = 0, skill0Y = 0;
+	
 	boolean skill0On = false;
 	boolean skill0OnOff = true;
-
+	double skill0cnt = 0;
+	int skill0X;
+	int skill0Y;
+	int skill0direct;
+	int skill0Count = 0;
 	// 스킬 1 관련 값들
-	double skill1cnt = 0;
-	int skill1Count = 0;
+	
 	boolean skill1On = false;
 	boolean skill1OnOff = true;
-
+	double skill1cnt = 0;
+	int skill1X;
+	int skill1Y;
+	int skill1direct;
+	int skill1Count = 0;
 	// 스킬 2 관련 값들
-	int skill2direct = 0;
-	int skill2X = 0, skill2Y = 0;
-	double skill2cnt = 0;
-	int skill2Count = 0;
+	
 	boolean skill2On = false;
 	boolean skill2OnOff = true;
-
-	// 스킬 사용 가능 여부 (카운터 값으로 일정 시간이 되면 공격이 가능) 쿨타임
-	// 같은거
+	double skill2cnt = 0;
+	int skill2X;
+	int skill2Y;
+	int skill2direct;
+	int skill2Count = 0;
+	
+	boolean skill3On = false;
+	boolean skill3OnOff = true;
+	double skill3cnt = 0;
+	int skill3X;
+	int skill3Y;
+	int skill3direct;
+	int skill3Count = 0;
 
 	Image humanImg;
 	Image attackImg;
@@ -242,24 +256,13 @@ abstract class Player implements KeyListener {
 		}
 
 	}
+	
+	public abstract void attackProcess(Player p,Graphics g,Graphics g1,ImageObserver frame);
+	public abstract void skill0Process(Player p,Graphics g,Graphics g1,ImageObserver frame);
+	public abstract void skill1Process(Player p,Graphics g,Graphics g1,ImageObserver frame);
+	public abstract void skill2Process(Player p,Graphics g,Graphics g1,ImageObserver frame);
+	public abstract void skill3Process(Player p,Graphics g,Graphics g1,ImageObserver frame);
 
-	public abstract void attack();
-
-	public abstract void DrawAttack(Graphics g, ImageObserver frame);
-
-	public abstract void skill0(); // 기본기
-
-	public abstract void DrawSkill0(Graphics g, ImageObserver frame);
-
-	public abstract void skill1(); // 스킬 123
-
-	public abstract void DrawSkill1(Graphics g, ImageObserver frame);
-
-	public abstract void skill2();
-
-	public abstract void DrawSkill2(Graphics g, ImageObserver frame);
-
-	public abstract void skill3();
-
-	public abstract void DrawSkill3(Graphics g, ImageObserver frame);
+	
+	public abstract void timer();
 }
