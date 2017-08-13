@@ -45,7 +45,7 @@ public class Main extends JFrame implements Runnable {
 		setTitle("Å×½ºÆ®");
 		setSize(f_width, f_height);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		p = new Warrior(300, 300);
+		p = new Archer(300, 300);
 		playerList.add(p);
 
 		for (int i = 0; i < playerList.size(); i++) {
