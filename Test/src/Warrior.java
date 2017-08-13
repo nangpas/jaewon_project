@@ -15,17 +15,7 @@ public class Warrior extends Player {
 	Image[] skill1Img;
 	Image[][] skill2Img;
 	
-	
 
-	
-
-	
-
-	
-
-	
-	
-	
 	public Warrior(int x, int y) {
 		super(x, y);
 		maxHp = 500;

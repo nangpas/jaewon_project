@@ -35,7 +35,7 @@ public class Main extends JFrame implements Runnable {
 	public static ArrayList monsterList = new ArrayList();
 	public static ArrayList missileList = new ArrayList();
 
-	 public static Player p;
+	public static Player p;
 	public static Monster mon;
 	public static Missile ms;
 
@@ -57,7 +57,7 @@ public class Main extends JFrame implements Runnable {
 			mon = new Monster(600, 250);
 			monsterList.add(mon);
 		}
-
+		
 		th = new Thread(this);
 		th.start();
 		setVisible(true);
