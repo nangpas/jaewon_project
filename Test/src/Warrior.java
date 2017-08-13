@@ -307,17 +307,16 @@ public class Warrior extends Player {
 	public void skill3() {
 
 	}
-
-	
-	public void skillProcess() {
-		
-
-	}
-
 	
 	public void DrawSkill3(Graphics g, ImageObserver frame) {
 		
 	}
+
+	
+
+
+	
+	
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
@@ -468,6 +467,12 @@ public class Warrior extends Player {
 		}
 		if(p.skill3On)
 			DrawSkill3(g, frame);
+	}
+
+	@Override
+	public void skillProcess() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

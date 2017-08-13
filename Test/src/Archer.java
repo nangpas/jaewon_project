@@ -57,6 +57,11 @@ public class Archer extends Player {
 				g.drawImage(ArcherDefault[moveStatus][0], charX, charY, frame);
 	}
 	
+	
+	public void attack() {
+		
+	}
+	
 	public void DrawAttack(Graphics g, ImageObserver frame) {
 
 		attackOnOff = false;
@@ -89,6 +94,35 @@ public class Archer extends Player {
 		}else 
 			g.drawImage(ArcherAttack[moveStatus][11], charX, charY, frame);
 
+	}
+	
+	public void skill0() {
+
+	}
+	
+	public void DrawSkill0(Graphics g, ImageObserver frame) {
+		
+	}
+	public void skill1() {
+
+	}
+	
+	public void DrawSkill1(Graphics g, ImageObserver frame) {
+		
+	}
+	public void skill2() {
+
+	}
+	
+	public void DrawSkill2(Graphics g, ImageObserver frame) {
+		
+	}
+	public void skill3() {
+
+	}
+	
+	public void DrawSkill3(Graphics g, ImageObserver frame) {
+		
 	}
 	
 
