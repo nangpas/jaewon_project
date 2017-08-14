@@ -2,6 +2,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.image.ImageObserver;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
@@ -10,7 +11,14 @@ public class Archer extends Player {
 	
 	Image[][] ArcherDefault;
 	Image[][] ArcherAttack;
+	Image[] Arrow;
 	
+	
+	Arrow ar;
+	
+	ArrayList arrowList =  new ArrayList();
+	
+ 	
 	public Archer(int x, int y){
 		super(x,y);
 		maxHp = 500;
@@ -30,6 +38,9 @@ public class Archer extends Player {
 			for (int j = 0; j < ArcherAttack[i].length; ++j)
 				ArcherAttack[i][j] = new ImageIcon("궁수 기본공격 " + i + "_" + j + ".png").getImage();
 		
+		Arrow = new Image[4];
+		for(int i = 0; i < Arrow.length; i++)
+			Arrow[i] = new ImageIcon("화살"+i+".png").getImage();	
 	}
 	
 	public void Draw_human(Graphics g, ImageObserver frame) {
@@ -62,7 +73,19 @@ public class Archer extends Player {
 		
 	}
 	
-	public void DrawAttack(Graphics g, ImageObserver frame) {
+	public void DrawAttack(Graphics g, ImageObserver frame){
+		for(int i = 0;i < arrowList.size(); ++i){
+			ar = (Arrow) arrowList.get(i);
+			g.drawImage(ar.arrowImg, ar.x, ar.y, frame);
+			ar.move();
+			if(ar.x > Main.f_width)
+				arrowList.remove(i);
+			if(ar.y > Main.f_height)
+				arrowList.remove(i);
+		}
+	}
+	
+	public void DrawAttackMontion(Graphics g, ImageObserver frame) {
 
 		attackOnOff = false;
 		attackCount = 0;
@@ -93,16 +116,26 @@ public class Archer extends Player {
 			g.drawImage(ArcherAttack[moveStatus][10], charX, charY, frame);
 		}else 
 			g.drawImage(ArcherAttack[moveStatus][11], charX, charY, frame);
+		
+		if (attackcnt == 9){
+			ar = new Arrow(charX, charY, moveStatus);
+			arrowList.add(ar);
+		}
 
 	}
+	
+	
 	
 	public void skill0() {
 
 	}
 	
 	public void DrawSkill0(Graphics g, ImageObserver frame) {
-		
+		for(int i = 0;i < arrowList.size(); ++i){
+			
+		}
 	}
+	
 	public void skill1() {
 
 	}
@@ -110,6 +143,7 @@ public class Archer extends Player {
 	public void DrawSkill1(Graphics g, ImageObserver frame) {
 		
 	}
+	
 	public void skill2() {
 
 	}
@@ -145,9 +179,12 @@ public class Archer extends Player {
 			getAttack();
 		}
 		if(p.attackOn)
-			DrawAttack(g, frame);
+			DrawAttackMontion(g1, frame);
 		else
 			Draw_human(g1, frame);
+		
+		DrawAttack(g, frame);
+		
 	}
 
 	@Override
@@ -222,5 +259,88 @@ public class Archer extends Player {
 			attackcnt = 0;
 		}
 	}
+	
 
+	class Arrow{
+		
+		int x,y;
+		int speed = 20;
+		int direct;
+		int plusX;
+		int plusY;
+		Image arrowImg;
+		
+		public Arrow(int x, int y, int direct){
+			this.x = x;
+			this.y = y;
+			this.direct = direct;
+			
+			switch(direct){
+			case 0:
+				this.x += 30;
+				this.plusX = 0;
+				this.plusY = -speed;
+				break;
+			case 1:
+				this.y += 30;
+				this.plusX = -speed;
+				this.plusY = 0;
+				break;
+			case 2:
+				this.x += 30;
+				this.y += 60;
+				this.plusX = 0;
+				this.plusY = speed;
+				break;
+			case 3:
+				this.y += 30;
+				this.x += 30;
+				this.plusX = speed;
+				this.plusY = 0;
+				break;
+			}
+			
+			arrowImg = new ImageIcon("화살"+direct+".png").getImage();
+		}
+		
+		public Arrow(int x, int y, int direct, int skill){
+			this.x = x;
+			this.y = y;
+			this.direct = direct;
+			
+			switch(direct){
+			case 0:
+				this.x += 30;
+				break;
+			case 1:
+				this.y += 30;
+				break;
+			case 2:
+				this.x += 30;
+				this.y += 60;
+				break;
+			case 3:
+				this.y += 30;
+				this.x += 30;
+				break;
+			}
+			
+			switch(skill){
+			case 0:
+				break;
+
+				
+			}
+			
+			arrowImg = new ImageIcon("화살"+direct+".png").getImage();
+		}
+		
+		public void move(){
+			x += plusX;
+			y += plusY;
+			
+		}
+		
+	}
+	
 }

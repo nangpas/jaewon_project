@@ -26,7 +26,7 @@ public class Main extends JFrame implements Runnable {
 
 	public static Graphics humanG[] = new Graphics[playercount];
 	public static Graphics monsterG[] = new Graphics[playercount];
-	public static Graphics skillG[] = new Graphics[4];
+	public static Graphics skillG[] = new Graphics[5];
 
 	public static Graphics missileG;
 	public static Graphics hpG;
@@ -90,7 +90,7 @@ public class Main extends JFrame implements Runnable {
 
 		for (int i = 0; i < playerList.size(); i++) {
 			p = (Player) playerList.get(i);
-			p.attackProcess(p, humanG[i], humanG[i], this);
+			p.attackProcess(p, skillG[i], humanG[i], this);
 			p.skill0Process(p, skillG[i], humanG[i], this);
 			p.skill1Process(p, skillG[i], humanG[i], this);
 			p.skill2Process(p, skillG[i], humanG[i], this);

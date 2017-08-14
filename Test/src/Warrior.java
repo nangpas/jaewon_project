@@ -397,7 +397,6 @@ public class Warrior extends Player {
 		skill1direct = moveStatus;
 		skill1X = charX;
 		skill1Y = charY;
-		
 	}
 
 	
@@ -405,7 +404,6 @@ public class Warrior extends Player {
 		skill2direct = moveStatus;
 		skill2X = charX;
 		skill2Y = charY;
-		
 	}
 
 	
@@ -413,7 +411,6 @@ public class Warrior extends Player {
 		skill3direct = moveStatus;
 		skill3X = charX;
 		skill3Y = charY;
-		
 	}
 
 	@Override
