@@ -481,61 +481,134 @@ public class Archer extends Player {
 			if (skill2cnt >= 5 && skill2cnt < 8) {
 				g.drawImage(ArcherDefault[skill2direct][0], skill2X, skill2Y + 145, frame);
 			}
-
-			if (skill2cnt >= 0 && skill2cnt < 8)
-				g.drawImage(ArcherDefault[skill2direct][0], charX, charY, frame);
-			if (skill2cnt >= 8 && skill2cnt < 8.5)
-				g.drawImage(ArcherAttack[skill2direct][3], charX, charY, frame);
-			if (skill2cnt >= 8.5 && skill2cnt < 9)
-				g.drawImage(ArcherAttack[skill2direct][4], charX, charY, frame);
-			if (skill2cnt >= 9 && skill2cnt < 9.5)
-				g.drawImage(ArcherAttack[skill2direct][5], charX, charY, frame);
-			if (skill2cnt >= 9.5 && skill2cnt < 10)
-				g.drawImage(ArcherAttack[skill2direct][6], charX, charY, frame);
-			if (skill2cnt >= 10 && skill2cnt < 10.5) {
-				g.drawImage(ArcherAttack[skill2direct][7], charX, charY, frame);
-				ar = new Arrow(charX, charY, moveStatus);
-				arrowList.add(ar);
-			}
-			if (skill2cnt >= 10.5 && skill2cnt < 11)
-				g.drawImage(ArcherAttack[skill2direct][8], charX, charY, frame);
-			if (skill2cnt >= 11 && skill2cnt < 11.5)
-				g.drawImage(ArcherAttack[skill2direct][9], charX, charY, frame);
-			if (skill2cnt >= 11.5 && skill2cnt < 12)
-				g.drawImage(ArcherAttack[skill2direct][10], charX, charY, frame);
-			if (skill2cnt >= 12 && skill2cnt < 12.5)
-				g.drawImage(ArcherAttack[skill2direct][11], charX, charY, frame);
-			if (skill2cnt >= 12.5 && skill2cnt < 13) {
-				g.drawImage(ArcherAttack[skill2direct][7], charX, charY, frame);
-				ar = new Arrow(charX, charY, moveStatus);
-				arrowList.add(ar);
-			}
-			if (skill2cnt >= 13 && skill2cnt < 13.5)
-				g.drawImage(ArcherAttack[skill2direct][8], charX, charY, frame);
-			if (skill2cnt >= 13.5 && skill2cnt < 14)
-				g.drawImage(ArcherAttack[skill2direct][9], charX, charY, frame);
-			if (skill2cnt >= 14 && skill2cnt < 14.5)
-				g.drawImage(ArcherAttack[skill2direct][10], charX, charY, frame);
-			if (skill2cnt >= 14.5 && skill2cnt < 15)
-				g.drawImage(ArcherAttack[skill2direct][11], charX, charY, frame);
-			if (skill2cnt >= 15 && skill2cnt < 15.5) {
-				g.drawImage(ArcherAttack[skill2direct][7], charX, charY, frame);
-				ar = new Arrow(charX, charY, moveStatus);
-				arrowList.add(ar);
-			}
-			if (skill2cnt >= 15.5 && skill2cnt < 16)
-				g.drawImage(ArcherAttack[skill2direct][8], charX, charY, frame);
-			if (skill2cnt >= 16 && skill2cnt < 16.5)
-				g.drawImage(ArcherAttack[skill2direct][9], charX, charY, frame);
-			if (skill2cnt >= 16.5 && skill2cnt < 17)
-				g.drawImage(ArcherAttack[skill2direct][10], charX, charY, frame);
-			if (skill2cnt >= 17 && skill2cnt <= 18)
-				g.drawImage(ArcherAttack[skill2direct][11], charX, charY, frame);
 			if (skill2cnt < 8)
 				charY += 10;
 			break;
+
+		case 1:
+			if (skill2cnt >= 0 && skill2cnt < 3) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X, skill2Y, frame);
+			}
+			if (skill2cnt >= 1 && skill2cnt < 4) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X + 25, skill2Y, frame);
+			}
+			if (skill2cnt >= 2 && skill2cnt < 5) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X + 65, skill2Y, frame);
+			}
+			if (skill2cnt >= 3 && skill2cnt < 6) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X + 95, skill2Y, frame);
+			}
+			if (skill2cnt >= 4 && skill2cnt < 7) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X + 110, skill2Y, frame);
+			}
+			if (skill2cnt >= 5 && skill2cnt < 8) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X + 145, skill2Y, frame);
+			}
+
+			if (skill2cnt < 8)
+				charX += 10;
+			break;
+
+		case 2:
+			if (skill2cnt >= 0 && skill2cnt < 3) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X, skill2Y, frame);
+			}
+			if (skill2cnt >= 1 && skill2cnt < 4) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X, skill2Y - 25, frame);
+			}
+			if (skill2cnt >= 2 && skill2cnt < 5) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X, skill2Y - 65, frame);
+			}
+			if (skill2cnt >= 3 && skill2cnt < 6) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X, skill2Y - 95, frame);
+			}
+			if (skill2cnt >= 4 && skill2cnt < 7) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X, skill2Y - 110, frame);
+			}
+			if (skill2cnt >= 5 && skill2cnt < 8) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X, skill2Y - 145, frame);
+			}
+
 			
+			if (skill2cnt < 8)
+				charY -= 10;
+			break;
+
+		case 3:
+			if (skill2cnt >= 0 && skill2cnt < 3) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X, skill2Y, frame);
+			}
+			if (skill2cnt >= 1 && skill2cnt < 4) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X - 25, skill2Y, frame);
+			}
+			if (skill2cnt >= 2 && skill2cnt < 5) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X - 65, skill2Y, frame);
+			}
+			if (skill2cnt >= 3 && skill2cnt < 6) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X - 95, skill2Y, frame);
+			}
+			if (skill2cnt >= 4 && skill2cnt < 7) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X - 110, skill2Y, frame);
+			}
+			if (skill2cnt >= 5 && skill2cnt < 8) {
+				g.drawImage(ArcherDefault[skill2direct][0], skill2X - 145, skill2Y, frame);
+			}
+
+			
+			if (skill2cnt < 8)
+				charX -= 10;
+			break;
 		}
+		
+		if (skill2cnt >= 0 && skill2cnt < 8)
+			g.drawImage(ArcherDefault[skill2direct][0], charX, charY, frame);
+		if (skill2cnt >= 8 && skill2cnt < 8.5)
+			g.drawImage(ArcherAttack[skill2direct][3], charX, charY, frame);
+		if (skill2cnt >= 8.5 && skill2cnt < 9)
+			g.drawImage(ArcherAttack[skill2direct][4], charX, charY, frame);
+		if (skill2cnt >= 9 && skill2cnt < 9.5)
+			g.drawImage(ArcherAttack[skill2direct][5], charX, charY, frame);
+		if (skill2cnt >= 9.5 && skill2cnt < 10)
+			g.drawImage(ArcherAttack[skill2direct][6], charX, charY, frame);
+		if (skill2cnt >= 10 && skill2cnt < 10.5) {
+			g.drawImage(ArcherAttack[skill2direct][7], charX, charY, frame);
+			ar = new Arrow(charX, charY, moveStatus);
+			arrowList.add(ar);
+		}
+		if (skill2cnt >= 10.5 && skill2cnt < 11)
+			g.drawImage(ArcherAttack[skill2direct][8], charX, charY, frame);
+		if (skill2cnt >= 11 && skill2cnt < 11.5)
+			g.drawImage(ArcherAttack[skill2direct][9], charX, charY, frame);
+		if (skill2cnt >= 11.5 && skill2cnt < 12)
+			g.drawImage(ArcherAttack[skill2direct][10], charX, charY, frame);
+		if (skill2cnt >= 12 && skill2cnt < 12.5)
+			g.drawImage(ArcherAttack[skill2direct][11], charX, charY, frame);
+		if (skill2cnt >= 12.5 && skill2cnt < 13) {
+			g.drawImage(ArcherAttack[skill2direct][7], charX, charY, frame);
+			ar = new Arrow(charX, charY, moveStatus);
+			arrowList.add(ar);
+		}
+		if (skill2cnt >= 13 && skill2cnt < 13.5)
+			g.drawImage(ArcherAttack[skill2direct][8], charX, charY, frame);
+		if (skill2cnt >= 13.5 && skill2cnt < 14)
+			g.drawImage(ArcherAttack[skill2direct][9], charX, charY, frame);
+		if (skill2cnt >= 14 && skill2cnt < 14.5)
+			g.drawImage(ArcherAttack[skill2direct][10], charX, charY, frame);
+		if (skill2cnt >= 14.5 && skill2cnt < 15)
+			g.drawImage(ArcherAttack[skill2direct][11], charX, charY, frame);
+		if (skill2cnt >= 15 && skill2cnt < 15.5) {
+			g.drawImage(ArcherAttack[skill2direct][7], charX, charY, frame);
+			ar = new Arrow(charX, charY, moveStatus);
+			arrowList.add(ar);
+		}
+		if (skill2cnt >= 15.5 && skill2cnt < 16)
+			g.drawImage(ArcherAttack[skill2direct][8], charX, charY, frame);
+		if (skill2cnt >= 16 && skill2cnt < 16.5)
+			g.drawImage(ArcherAttack[skill2direct][9], charX, charY, frame);
+		if (skill2cnt >= 16.5 && skill2cnt < 17)
+			g.drawImage(ArcherAttack[skill2direct][10], charX, charY, frame);
+		if (skill2cnt >= 17 && skill2cnt <= 18)
+			g.drawImage(ArcherAttack[skill2direct][11], charX, charY, frame);
 	}
 
 	public void skill3() {
