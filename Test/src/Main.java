@@ -14,8 +14,8 @@ public class Main extends JFrame implements Runnable {
 
 	public static int playercount = 2;
 
-	public static int f_width = 1300;
-	public static int f_height = 700;
+	public static int f_width = 1600;
+	public static int f_height = 900;
 	public static int count = 0;
 	public static int warrior = 0;
 	public static int thief = 1;
@@ -47,8 +47,8 @@ public class Main extends JFrame implements Runnable {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		p = new Archer(300, 300);
 		playerList.add(p);
-		p = new Warrior(200, 200);
-		playerList.add(p);
+		//p = new Warrior(200, 200);
+		//playerList.add(p);
 		for (int i = 0; i < playerList.size(); i++) {
 			p = (Player) playerList.get(i);
 			addKeyListener(p);
@@ -112,7 +112,6 @@ public class Main extends JFrame implements Runnable {
 					p = (Player) playerList.get(i);
 					p.keyProcess();
 					p.timer();
-					
 				}
 				repaint();
 				Thread.sleep(10);

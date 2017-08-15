@@ -14,7 +14,7 @@ abstract class Player implements KeyListener {
 	double maxHp, hp, power, speedOfAttack, speedOfPlayer, barrier;
 
 	int moveStatus;
-
+	boolean skilling = false;
 	// 기본공격 관련 값들
 	boolean attackOn = false; // 공격을 했다는 표시
 	boolean attackOnOff = true; // 공격 가능 여부 (카운터 값으로 일정 시간이 되면 공격이 가능) 쿨타임 같은거
@@ -142,7 +142,7 @@ abstract class Player implements KeyListener {
 	public void keyProcess() {
 		playerMove = false;
 
-		if (skill2On == false) {
+		if (skilling == false) {
 
 			if (keyUp) {
 				playerMove = true;

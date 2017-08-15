@@ -443,7 +443,6 @@ public class Warrior extends Player {
 		}
 		if(p.skill1On)
 			DrawSkill1(g, frame);
-		
 	}
 
 	@Override
