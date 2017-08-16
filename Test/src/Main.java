@@ -47,8 +47,8 @@ public class Main extends JFrame implements Runnable {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		p = new Archer(300, 300);
 		playerList.add(p);
-		//p = new Warrior(200, 200);
-		//playerList.add(p);
+		p = new Warrior(200, 200);
+		playerList.add(p);
 		for (int i = 0; i < playerList.size(); i++) {
 			p = (Player) playerList.get(i);
 			addKeyListener(p);

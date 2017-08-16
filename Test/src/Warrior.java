@@ -46,7 +46,7 @@ public class Warrior extends Player {
 		WarriorAttack = new Image[4][6];
 		for (int i = 0; i < WarriorAttack.length; ++i)
 			for (int j = 0; j < WarriorAttack[i].length; ++j)
-				WarriorAttack[i][j] = new ImageIcon("전사 기본 공격 " + i + "_" + j + ".png").getImage();
+				WarriorAttack[i][j] = new ImageIcon("전사 기본공격 " + i + "_" + j + ".png").getImage();
 	}
 
 	public Warrior() {
@@ -79,7 +79,7 @@ public class Warrior extends Player {
 		WarriorAttack = new Image[4][6];
 		for (int i = 0; i < WarriorAttack.length; ++i)
 			for (int j = 0; j < WarriorAttack[i].length; ++j)
-				WarriorAttack[i][j] = new ImageIcon("전사 기본 공격 " + i + "_" + j + ".png").getImage();
+				WarriorAttack[i][j] = new ImageIcon("전사 기본공격 " + i + "_" + j + ".png").getImage();
 
 	}
 
@@ -162,7 +162,6 @@ public class Warrior extends Player {
 		attackOnOff = false;
 		attackCount = 0;
 
-		g.setClip(charX, charY, Main.ImageWidthValue("캐릭터 기본.png") / 9, Main.ImageHeigthValue("캐릭터 기본.png") / 4);
 
 		if (attackcnt >= 0 && attackcnt < 1) {
 			g.drawImage(WarriorAttack[moveStatus][0], charX, charY, frame);
@@ -288,7 +287,6 @@ public class Warrior extends Player {
 				g.drawImage(skill2Img[skill2direct][3], skill2X - 12, skill2Y + 60, frame);
 			break;
 			
-
 		case 3:
 			if (skill2cnt >= 0 && skill2cnt < 6)
 				g.drawImage(skill2Img[skill2direct][0], skill2X + 45, skill2Y + 10, frame);
@@ -300,7 +298,6 @@ public class Warrior extends Player {
 				g.drawImage(skill2Img[skill2direct][3], skill2X + 45, skill2Y + 10, frame);
 			break;
 		}
-
 	}
 
 	
@@ -359,8 +356,10 @@ public class Warrior extends Player {
 		
 		if(skill2On)
 			skill2cnt += 0.2;
-		if(skill2cnt > 20)
+		if(skill2cnt > 20){
 			skill2On = false;
+			skilling = false;
+		}
 		skill2Count++;
 		if(skill2Count > 50){
 			skill2OnOff = true;
@@ -372,7 +371,7 @@ public class Warrior extends Player {
 			skill3cnt += 0.2;
 		if(skill3cnt > 20)
 			skill3On = false;
-		skill2Count++;
+		skill3Count++;
 		if(skill3Count > 50){
 			skill3OnOff = true;
 			skill3cnt = 0;
@@ -450,6 +449,7 @@ public class Warrior extends Player {
 		if(p.keyD && p.skill2OnOff){
 			p.skill2On = true;
 			getSkill2();
+			skilling = true;
 		}
 		if(p.skill2On)
 			DrawSkill2(g, frame);
