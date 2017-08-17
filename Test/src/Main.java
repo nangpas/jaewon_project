@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 
 public class Main extends JFrame implements Runnable {
 
-	public static int playercount = 2;
+	public static int playercount = 3;
 
 	public static int f_width = 1600;
 	public static int f_height = 900;
@@ -48,6 +48,8 @@ public class Main extends JFrame implements Runnable {
 		p = new Archer(300, 300);
 		playerList.add(p);
 		p = new Warrior(200, 200);
+		playerList.add(p);
+		p = new Priest(500, 200);
 		playerList.add(p);
 		for (int i = 0; i < playerList.size(); i++) {
 			p = (Player) playerList.get(i);
@@ -146,6 +148,7 @@ public class Main extends JFrame implements Runnable {
 		return y;
 	}
 
+	
 	public static boolean Crash(Rectangle r, int x2, int y2, Graphics img2) {
 		boolean check = false;
 		int x1 = r.x;
@@ -162,24 +165,46 @@ public class Main extends JFrame implements Runnable {
 
 		return check;
 	}
-
+	
+	// Ä³¸¯ÅÍ¶û ¹¹¶û Ãæµ¹°Ë
 	public static boolean Crash(int x1, int y1, int x2, int y2, Graphics img1, Graphics img2) {
 
 		boolean check = false;
+		img1.setClip(x1+26 , y1+14 , 30, 48);
+		
 		Rectangle r = img1.getClipBounds();
 		Rectangle h = img2.getClipBounds();
-
-		if (Math.abs((x1 + r.width / 2) - (x2 + h.width / 2)) < (h.width / 2 + r.width / 2)
-				&& Math.abs((y1 + r.height / 2) - (y2 + h.height / 2)) < (h.height / 2 + r.height / 2)) {
+		System.out.println(r.x + " , " + r.y  + " , " +  h.x  + " , " + h.y);
+		
+		if (Math.abs((r.x + r.width / 2) - (h.x + h.width / 2)) < (h.width / 2 + r.width / 2)
+				&& Math.abs((r.y + r.height / 2) - (h.y + h.height / 2)) < (h.height / 2 + r.height / 2)) {
 			check = true;
 		} else {
 			check = false;
 		}
 		return check;
 	}
+	
+	
+	public static boolean Crash(int x1, int y1, int x2, int y2, Graphics img1, Image img2) {
 
+		boolean check = false;
+		img1.setClip(x1+26 , y1+14 , 30, 48);
+		
+		Rectangle r = img1.getClipBounds();
+		Rectangle h = new Rectangle(x2, y2, img2.getHeight(null), img2.getHeight(null));
+		
+		if (Math.abs((r.x + r.width / 2) - (h.x + h.width / 2)) < (h.width / 2 + r.width / 2)
+				&& Math.abs((r.y + r.height / 2) - (h.y + h.height / 2)) < (h.height / 2 + r.height / 2)) {
+			check = true;
+		} else {
+			check = false;
+		}
+		return check;
+	}
+	
 	public static boolean Crash(int x1, int y1, int x2, int y2, Image img1, Image img2, int x) {
-
+ 
 		boolean check = false;
 		double a;
 

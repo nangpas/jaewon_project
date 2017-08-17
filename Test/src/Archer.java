@@ -13,7 +13,6 @@ public class Archer extends Player {
 	Image[] Arrow;
 	Image[][] ArcherSkill3;
 
-	int skill1c = 0;
 	Arrow ar;
 
 	ArrayList arrowList = new ArrayList();
@@ -76,7 +75,7 @@ public class Archer extends Player {
 
 	}
 
-	public void DrawAttack(Graphics g, ImageObserver frame) {
+	public void DrawArrow(Graphics g, ImageObserver frame) {
 		for (int i = 0; i < arrowList.size(); ++i) {
 			ar = (Arrow) arrowList.get(i);
 			g.drawImage(ar.arrowImg, ar.x, ar.y, frame);
@@ -88,7 +87,7 @@ public class Archer extends Player {
 		}
 	}
 
-	public void DrawAttackMontion(Graphics g, ImageObserver frame) {
+	public void DrawAttack(Graphics g, ImageObserver frame) {
 
 		attackOnOff = false;
 		attackCount = 0;
@@ -146,7 +145,7 @@ public class Archer extends Player {
 		skill0OnOff = false;
 		skill0Count = 0;
 
-		g.setClip(charX, charY, Main.ImageWidthValue("캐릭터 기본.png") / 9, Main.ImageHeigthValue("캐릭터 기본.png") / 4);
+	
 
 		if (skill0cnt >= 0 && skill0cnt < 1) {
 			g.drawImage(ArcherAttack[moveStatus][0], charX, charY, frame);
@@ -730,11 +729,7 @@ public class Archer extends Player {
 
 	}
 
-	@Override
-	public void skillProcess() {
-		// TODO Auto-generated method stub
 
-	}
 
 	@Override
 	public void attackProcess(Player p, Graphics g, Graphics g1, ImageObserver frame) {
@@ -743,10 +738,10 @@ public class Archer extends Player {
 			getAttack();
 		}
 		if (p.attackOn) {
-			DrawAttackMontion(g1, frame);
+			DrawAttack(g1, frame);
 		} else if (skill0On == false && skill1On == false && skill2On == false && skill3On == false )
 			Draw_human(g1, frame);
-		DrawAttack(g, frame);
+		DrawArrow(g, frame);
 	}
 
 	@Override

@@ -465,10 +465,4 @@ public class Warrior extends Player {
 			DrawSkill3(g, frame);
 	}
 
-	@Override
-	public void skillProcess() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

@@ -136,7 +136,6 @@ abstract class Player implements KeyListener {
 		g.fill3DRect(charX, charY, (int) hp / 10, 5, true);
 	}
 
-	public abstract void skillProcess();
 
 	public void keyProcess() {
 		playerMove = false;
