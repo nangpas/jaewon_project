@@ -25,7 +25,7 @@ public class Archer extends Player {
 		speedOfAttack = 25;
 		speedOfPlayer = 5;
 		power = 0.2;
-
+		
 		ArcherDefault = new Image[4][9];
 		for (int i = 0; i < ArcherDefault.length; ++i)
 			for (int j = 0; j < ArcherDefault[i].length; ++j)

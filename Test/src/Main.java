@@ -51,6 +51,7 @@ public class Main extends JFrame implements Runnable {
 		playerList.add(p);
 		p = new Priest(500, 200);
 		playerList.add(p);
+		
 		for (int i = 0; i < playerList.size(); i++) {
 			p = (Player) playerList.get(i);
 			addKeyListener(p);
