@@ -175,8 +175,7 @@ public class Main extends JFrame implements Runnable {
 		
 		Rectangle r = img1.getClipBounds();
 		Rectangle h = img2.getClipBounds();
-		System.out.println(r.x + " , " + r.y  + " , " +  h.x  + " , " + h.y);
-		
+
 		if (Math.abs((r.x + r.width / 2) - (h.x + h.width / 2)) < (h.width / 2 + r.width / 2)
 				&& Math.abs((r.y + r.height / 2) - (h.y + h.height / 2)) < (h.height / 2 + r.height / 2)) {
 			check = true;
