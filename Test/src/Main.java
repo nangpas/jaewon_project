@@ -89,7 +89,8 @@ public class Main extends JFrame implements Runnable {
 			mon.Draw_monster(monsterG[i], this);
 			mon.monsterMove();
 		}
-
+		
+		
 		for (int i = 0; i < playerList.size(); i++) {
 			p = (Player) playerList.get(i);
 			p.attackProcess(p, skillG[i], humanG[i], this);

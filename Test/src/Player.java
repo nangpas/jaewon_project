@@ -172,9 +172,10 @@ abstract class Player implements KeyListener {
 			}
 
 			if (keyS) {
-				Image img = new ImageIcon("star.png").getImage();
+				/*Image img = new ImageIcon("star.png").getImage();
 				Main.ms = new Missile(Main.mon.x, Main.mon.y, charX, charY, 2, img);
-				Main.missileList.add(Main.ms);
+				Main.missileList.add(Main.ms);*/
+				
 			}
 		}
 	}

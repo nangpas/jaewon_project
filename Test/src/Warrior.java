@@ -15,7 +15,7 @@ public class Warrior extends Player {
 	Image[] skill1Img;
 	Image[][] skill2Img;
 	
-
+	Player p;
 	public Warrior(int x, int y) {
 		super(x, y);
 		maxHp = 500;
@@ -108,14 +108,8 @@ public class Warrior extends Player {
 				}
 			} else
 				g.drawImage(WarriorDefault[moveStatus][0], charX, charY, frame);
-		} else {
-			if (skill2cnt >= 0 && skill2cnt < 8) {
-				g.drawImage(WarriorAttack[moveStatus][0], skill2X, skill2Y, frame);
-			} else
-				g.drawImage(WarriorAttack[moveStatus][5], skill2X, skill2Y, frame);
 		}
 	}
-
 
 	public void attack() {
 		Rectangle tmpRect;
@@ -156,12 +150,10 @@ public class Warrior extends Player {
 		}
 	}
 
-
 	public void DrawAttack(Graphics g, ImageObserver frame) {
 
 		attackOnOff = false;
 		attackCount = 0;
-
 
 		if (attackcnt >= 0 && attackcnt < 1) {
 			g.drawImage(WarriorAttack[moveStatus][0], charX, charY, frame);
@@ -179,7 +171,6 @@ public class Warrior extends Player {
 
 	}
 
-
 	// 방패 막기 스킬 충돌
 	public void skill0() {
 		for (int i = 0; i < Main.missileList.size(); ++i) {
@@ -191,7 +182,6 @@ public class Warrior extends Player {
 			}
 		}
 	}
-
 
 	public void DrawSkill0(Graphics g, ImageObserver frame) {
 
@@ -213,107 +203,108 @@ public class Warrior extends Player {
 
 	}
 
-
 	public void skill1() {
 		maxHp += 500;
 	}
-
 
 	public void DrawSkill1(Graphics g, ImageObserver frame) {
 
 		skill1OnOff = false;
 		skill1Count = 0;
-		
-		if (skill1cnt >= 0 && skill1cnt < 1)
-			g.drawImage(skill1Img[0], charX + 8, charY - 18, frame);
-		else if (skill1cnt >= 1 && skill1cnt < 2)
-			g.drawImage(skill1Img[1], charX + 8, charY - 18, frame);
-		else if (skill1cnt >= 2 && skill1cnt < 3)
-			g.drawImage(skill1Img[2], charX + 8, charY - 18, frame);
-		else if (skill1cnt >= 3 && skill1cnt < 4)
-			g.drawImage(skill1Img[3], charX + 8, charY - 18, frame);
-		else if (skill1cnt >= 4 && skill1cnt < 6) {
-			g.drawImage(skill1Img[4], charX + 8, charY - 18, frame);
-		} else if (skill1cnt >= 6 && skill1cnt < 9) {
-			g.drawImage(skill1Img[5], charX + 8, charY - 18, frame);
-		} else {
-			g.drawImage(skill1Img[6], charX + 8, charY - 18, frame);
+
+		for (int i = 0; i < Main.playerList.size(); ++i) {
+			p = (Player) Main.playerList.get(i);
+			
+			if (skill1cnt >= 0 && skill1cnt < 1)
+				g.drawImage(skill1Img[0], p.charX + 13, p.charY - 18, frame);
+			else if (skill1cnt >= 1 && skill1cnt < 2)
+				g.drawImage(skill1Img[1], p.charX + 13, p.charY - 18, frame);
+			else if (skill1cnt >= 2 && skill1cnt < 3)
+				g.drawImage(skill1Img[2], p.charX + 13, p.charY - 18, frame);
+			else if (skill1cnt >= 3 && skill1cnt < 4)
+				g.drawImage(skill1Img[3], p.charX + 13, p.charY - 18, frame);
+			else if (skill1cnt >= 4 && skill1cnt < 6) {
+				g.drawImage(skill1Img[4], p.charX + 13, p.charY - 18, frame);
+			} else if (skill1cnt >= 6 && skill1cnt < 9) {
+				g.drawImage(skill1Img[5], p.charX + 13, p.charY - 18, frame);
+			} else {
+				g.drawImage(skill1Img[6], p.charX + 13, p.charY - 18, frame);
+			}
 		}
 	}
-
 
 	public void skill2() {
 
 	}
 
+	public void DrawSkill2Motion(Graphics g, ImageObserver frame) {
+		if (skill2cnt >= 0 && skill2cnt < 5)
+			g.drawImage(WarriorAttack[skill2direct][1], skill2X, skill2Y, frame);
+		if (skill2cnt >= 5 && skill2cnt < 7)
+			g.drawImage(WarriorAttack[skill2direct][4], skill2X, skill2Y, frame);
+		if (skill2cnt >= 5 && skill2cnt < 20)
+			g.drawImage(WarriorAttack[skill2direct][5], skill2X, skill2Y, frame);
+	}
 
 	public void DrawSkill2(Graphics g, ImageObserver frame) {
 
 		skill2OnOff = false;
 		skill2Count = 0;
-		
-		switch (skill2direct) {
 
+		switch (skill2direct) {
 		case 0:
 			if (skill2cnt >= 8 && skill2cnt < 12)
-				g.drawImage(skill2Img[skill2direct][0], skill2X - 12, skill2Y - 95, frame);
+				g.drawImage(skill2Img[skill2direct][0], skill2X - 2, skill2Y - 95, frame);
 			else if (skill2cnt >= 12 && skill2cnt < 14)
-				g.drawImage(skill2Img[skill2direct][1], skill2X - 12, skill2Y - 95, frame);
+				g.drawImage(skill2Img[skill2direct][1], skill2X - 2, skill2Y - 95, frame);
 			else if (skill2cnt >= 14 && skill2cnt < 17)
-				g.drawImage(skill2Img[skill2direct][2], skill2X - 12, skill2Y - 95, frame);
-			else if(skill2cnt >= 17 && skill2cnt < 20)
-				g.drawImage(skill2Img[skill2direct][3], skill2X - 12, skill2Y - 95, frame);
+				g.drawImage(skill2Img[skill2direct][2], skill2X - 2, skill2Y - 95, frame);
+			else if (skill2cnt >= 17 && skill2cnt < 20)
+				g.drawImage(skill2Img[skill2direct][3], skill2X - 2, skill2Y - 95, frame);
 			break;
 
 		case 1:
 			if (skill2cnt >= 0 && skill2cnt < 6)
-				g.drawImage(skill2Img[skill2direct][0], skill2X - 110, skill2Y + 10, frame);
+				g.drawImage(skill2Img[skill2direct][0], skill2X - 100, skill2Y + 12, frame);
 			else if (skill2cnt >= 6 && skill2cnt < 9)
-				g.drawImage(skill2Img[skill2direct][1], skill2X - 110, skill2Y + 10, frame);
+				g.drawImage(skill2Img[skill2direct][1], skill2X - 100, skill2Y + 12, frame);
 			else if (skill2cnt >= 9 && skill2cnt < 12)
-				g.drawImage(skill2Img[skill2direct][2], skill2X - 110, skill2Y + 10, frame);
+				g.drawImage(skill2Img[skill2direct][2], skill2X - 100, skill2Y + 12, frame);
 			else
-				g.drawImage(skill2Img[skill2direct][3], skill2X - 110, skill2Y + 10, frame);
+				g.drawImage(skill2Img[skill2direct][3], skill2X - 100, skill2Y + 12, frame);
 			break;
 
 		case 2:
 			if (skill2cnt >= 0 && skill2cnt < 6)
-				g.drawImage(skill2Img[skill2direct][0], skill2X - 12, skill2Y + 60, frame);
+				g.drawImage(skill2Img[skill2direct][0], skill2X - 5, skill2Y + 63, frame);
 			else if (skill2cnt >= 6 && skill2cnt < 9)
-				g.drawImage(skill2Img[skill2direct][1], skill2X - 12, skill2Y + 60, frame);
+				g.drawImage(skill2Img[skill2direct][1], skill2X - 5, skill2Y + 63, frame);
 			else if (skill2cnt >= 9 && skill2cnt < 12)
-				g.drawImage(skill2Img[skill2direct][2], skill2X - 12, skill2Y + 60, frame);
+				g.drawImage(skill2Img[skill2direct][2], skill2X - 5, skill2Y + 63, frame);
 			else
-				g.drawImage(skill2Img[skill2direct][3], skill2X - 12, skill2Y + 60, frame);
+				g.drawImage(skill2Img[skill2direct][3], skill2X - 5, skill2Y + 63, frame);
 			break;
-			
+
 		case 3:
 			if (skill2cnt >= 0 && skill2cnt < 6)
-				g.drawImage(skill2Img[skill2direct][0], skill2X + 45, skill2Y + 10, frame);
+				g.drawImage(skill2Img[skill2direct][0], skill2X + 48, skill2Y + 12, frame);
 			else if (skill2cnt >= 6 && skill2cnt < 9)
-				g.drawImage(skill2Img[skill2direct][1], skill2X + 45, skill2Y + 10, frame);
+				g.drawImage(skill2Img[skill2direct][1], skill2X + 48, skill2Y + 12, frame);
 			else if (skill2cnt >= 9 && skill2cnt < 12)
-				g.drawImage(skill2Img[skill2direct][2], skill2X + 45, skill2Y + 10, frame);
+				g.drawImage(skill2Img[skill2direct][2], skill2X + 48, skill2Y + 12, frame);
 			else
-				g.drawImage(skill2Img[skill2direct][3], skill2X + 45, skill2Y + 10, frame);
+				g.drawImage(skill2Img[skill2direct][3], skill2X + 48, skill2Y + 12, frame);
 			break;
 		}
 	}
 
-	
 	public void skill3() {
 
 	}
-	
+
 	public void DrawSkill3(Graphics g, ImageObserver frame) {
-		
+
 	}
-
-	
-
-
-	
-	
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
@@ -323,60 +314,58 @@ public class Warrior extends Player {
 
 	@Override
 	public void timer() {
-		if(attackOn)
+		if (attackOn)
 			attackcnt += 0.2;
-		if(attackcnt > 6)
+		if (attackcnt > 6)
 			attackOn = false;
 		attackCount++;
-		if(attackCount > 50){
+		if (attackCount > 50) {
 			attackOnOff = true;
 			attackcnt = 0;
 		}
-		
-		
-		if(skill0On)
+
+		if (skill0On)
 			skill0cnt += 0.2;
-		if(skill0cnt > 20)
+		if (skill0cnt > 20)
 			skill0On = false;
 		skill0Count++;
-		if(skill0Count > 50){
+		if (skill0Count > 50) {
 			skill0OnOff = true;
 			skill0cnt = 0;
 		}
-		
-		if(skill1On)
+
+		if (skill1On)
 			skill1cnt += 0.2;
-		if(skill1cnt > 20)
+		if (skill1cnt > 20)
 			skill1On = false;
 		skill1Count++;
-		if(skill1Count > 50){
+		if (skill1Count > 50) {
 			skill1OnOff = true;
 			skill1cnt = 0;
 		}
-		
-		if(skill2On)
+
+		if (skill2On)
 			skill2cnt += 0.2;
-		if(skill2cnt > 20){
+		if (skill2cnt > 20) {
 			skill2On = false;
 			skilling = false;
 		}
 		skill2Count++;
-		if(skill2Count > 50){
+		if (skill2Count > 50) {
 			skill2OnOff = true;
 			skill2cnt = 0;
 		}
-		
-		
-		if(skill3On)
+
+		if (skill3On)
 			skill3cnt += 0.2;
-		if(skill3cnt > 20)
+		if (skill3cnt > 20)
 			skill3On = false;
 		skill3Count++;
-		if(skill3Count > 50){
+		if (skill3Count > 50) {
 			skill3OnOff = true;
 			skill3cnt = 0;
 		}
-		
+
 	}
 
 	public void getAttack() {
@@ -391,21 +380,18 @@ public class Warrior extends Player {
 		skill0Y = charY;
 	}
 
-	
 	public void getSkill1() {
 		skill1direct = moveStatus;
 		skill1X = charX;
 		skill1Y = charY;
 	}
 
-	
 	public void getSkill2() {
 		skill2direct = moveStatus;
 		skill2X = charX;
 		skill2Y = charY;
 	}
 
-	
 	public void getSkill3() {
 		skill3direct = moveStatus;
 		skill3X = charX;
@@ -414,54 +400,59 @@ public class Warrior extends Player {
 
 	@Override
 	public void attackProcess(Player p, Graphics g, Graphics g1, ImageObserver frame) {
-		if(p.keySpace && p.attackOnOff){
+		if (p.keySpace && p.attackOnOff) {
 			p.attackOn = true;
 			getAttack();
 		}
-		if(p.attackOn)
-			DrawAttack(g, frame);
-		else
+		if (p.attackOn) {
+			DrawAttack(g1, frame);
+		} else if (skill2On == false && skill3On == false)
 			Draw_human(g1, frame);
 	}
 
 	@Override
 	public void skill0Process(Player p, Graphics g, Graphics g1, ImageObserver frame) {
-		if(p.keyA && p.skill0OnOff){
+		if (p.keyA && p.skill0OnOff) {
 			p.skill0On = true;
 			getSkill0();
 		}
-		if(p.skill0On)
+		if (p.skill0On){
 			DrawSkill0(g, frame);
+		}
 	}
 
 	@Override
 	public void skill1Process(Player p, Graphics g, Graphics g1, ImageObserver frame) {
-		if(p.keyS && p.skill1OnOff){
+		if (p.keyS && p.skill1OnOff) {
 			p.skill1On = true;
 			getSkill1();
 		}
-		if(p.skill1On)
+		if (p.skill1On) {
 			DrawSkill1(g, frame);
+		}
+
 	}
 
 	@Override
 	public void skill2Process(Player p, Graphics g, Graphics g1, ImageObserver frame) {
-		if(p.keyD && p.skill2OnOff){
+		if (p.keyD && p.skill2OnOff) {
 			p.skill2On = true;
 			getSkill2();
 			skilling = true;
 		}
-		if(p.skill2On)
+		if (p.skill2On) {
 			DrawSkill2(g, frame);
+			DrawSkill2Motion(g1, frame);
+		}
 	}
 
 	@Override
 	public void skill3Process(Player p, Graphics g, Graphics g1, ImageObserver frame) {
-		if(p.keyF && p.skill3OnOff){
+		if (p.keyF && p.skill3OnOff) {
 			p.skill3On = true;
 			getSkill3();
 		}
-		if(p.skill3On)
+		if (p.skill3On)
 			DrawSkill3(g, frame);
 	}
 

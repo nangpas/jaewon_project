@@ -11,15 +11,19 @@ public class Priest extends Player {
 	Image[][] PriestDefault;
 	Image[][] PriestAttack;
 	Image[] PriestAttackEffect;
-
-	Heal heal;
-
+	Image[] PriestShield;
+	
 	ArrayList healList = new ArrayList();
 	ArrayList playerList = new ArrayList();
 	ArrayList healEffectList = new ArrayList();
 
 	Player p;
 	HealEffect healeffect;
+	Heal heal;
+
+	Player shieldP = null;
+	Heal shiledHeal = null;
+	Shield sd = null;
 
 	public Priest(int x, int y) {
 		super(x, y);
@@ -43,6 +47,10 @@ public class Priest extends Player {
 		PriestAttackEffect = new Image[3];
 		for (int i = 0; i < PriestAttackEffect.length; ++i)
 			PriestAttackEffect[i] = new ImageIcon("Èú ÀÌÆåÆ®" + i + ".png").getImage();
+
+		PriestShield = new Image[8];
+		for (int i = 0; i < PriestShield.length; ++i)
+			PriestShield[i] = new ImageIcon("ÇÁ¸®½ºÆ® º¸È£¸· " + i + ".png").getImage();
 	}
 
 	public void Draw_human(Graphics g, ImageObserver frame) {
@@ -74,23 +82,34 @@ public class Priest extends Player {
 		for (int i = 0; i < healList.size(); ++i) {
 			heal = (Heal) healList.get(i);
 			g.drawImage(heal.healImg, heal.x, heal.y, frame);
-			for (int j = 0; j < Main.playerList.size(); ++j) {
-				p = (Player) Main.playerList.get(j);
-				if (Main.Crash(p.charX, p.charY, heal.x, heal.y, g1, heal.healImg)) {
-					healList.remove(i);
-					playerList.add(p);
-					healeffect = new HealEffect();
-					healEffectList.add(healeffect);
+			if (heal.shield) {
+				for (int j = 0; j < Main.playerList.size(); ++j) {
+					p = (Player) Main.playerList.get(j);
+					if (Main.Crash(p.charX, p.charY, heal.x, heal.y, g1, heal.healImg)) {
+						healList.remove(i);
+						shieldP = p;
+						sd = new Shield();
+					}
 				}
-
-				heal.move();
-				if (heal.x > Main.f_width)
-					healList.remove(i);
-				if (heal.y > Main.f_height)
-					healList.remove(i);
+			} else {
+				for (int j = 0; j < Main.playerList.size(); ++j) {
+					p = (Player) Main.playerList.get(j);
+					if (Main.Crash(p.charX, p.charY, heal.x, heal.y, g1, heal.healImg)) {
+						healList.remove(i);
+						playerList.add(p);
+						healeffect = new HealEffect();
+						healEffectList.add(healeffect);
+					}
+				}
 			}
-		}
+			
+			heal.move();
+			if (heal.x > Main.f_width)
+				healList.remove(i);
+			if (heal.y > Main.f_height)
+				healList.remove(i);
 
+		}
 	}
 
 	public void healEffect(Graphics g, ImageObserver frame) {
@@ -98,18 +117,16 @@ public class Priest extends Player {
 			p = (Player) playerList.get(i);
 			healeffect = (HealEffect) healEffectList.get(i);
 			if (healeffect.cnt >= 0 && healeffect.cnt < 1) {
-				g.drawImage(PriestAttackEffect[0], p.charX+26, p.charY+14, frame);
+				g.drawImage(PriestAttackEffect[0], p.charX + 23, p.charY + 12, frame);
 			} else if (healeffect.cnt >= 1 && healeffect.cnt < 2) {
-				g.drawImage(PriestAttackEffect[1], p.charX+26, p.charY+14, frame);
+				g.drawImage(PriestAttackEffect[1], p.charX + 23, p.charY + 12, frame);
 			} else if (healeffect.cnt >= 2 && healeffect.cnt < 3) {
-				g.drawImage(PriestAttackEffect[2], p.charX+26, p.charY+14, frame);
+				g.drawImage(PriestAttackEffect[2], p.charX + 23, p.charY + 12, frame);
 			}
-			
-			if(healeffect.cnt > 3){
+			if (healeffect.cnt > 3) {
 				healEffectList.remove(i);
 				playerList.remove(i);
 			}
-			
 
 		}
 	}
@@ -132,8 +149,6 @@ public class Priest extends Player {
 			g.drawImage(PriestAttack[moveStatus][5], charX, charY, frame);
 		} else if (attackcnt >= 6 && attackcnt < 7) {
 			g.drawImage(PriestAttack[moveStatus][6], charX, charY, frame);
-		} else if (attackcnt >= 7 && attackcnt < 8) {
-			g.drawImage(PriestAttack[moveStatus][7], charX, charY, frame);
 		}
 
 		if (attackcnt >= 5 && attackcnt < 5.2) {
@@ -142,12 +157,95 @@ public class Priest extends Player {
 		}
 	}
 
+	// ½¯µå ½ºÅ³
 	public void skill0() {
 
 	}
 
-	public void DrawSkill0(Graphics g, ImageObserver frame) {
+	public void DrawShied(Graphics g, ImageObserver frame) {
+		if (sd != null) {
+			if (sd.cnt >= 0 && sd.cnt < 1) {
+				g.drawImage(PriestShield[0], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 1 && sd.cnt < 2) {
+				g.drawImage(PriestShield[1], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 2 && sd.cnt < 3) {
+				g.drawImage(PriestShield[2], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 3 && sd.cnt < 4) {
+				g.drawImage(PriestShield[3], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 4 && sd.cnt < 5) {
+				g.drawImage(PriestShield[4], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 5 && sd.cnt < 6) {
+				g.drawImage(PriestShield[5], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 6 && sd.cnt < 7) {
+				g.drawImage(PriestShield[6], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 7 && sd.cnt < 8) {
+				g.drawImage(PriestShield[7], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 8 && sd.cnt < 9) {
+				g.drawImage(PriestShield[0], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 9 && sd.cnt < 10) {
+				g.drawImage(PriestShield[1], shieldP.charX +7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 10 && sd.cnt < 11) {
+				g.drawImage(PriestShield[2], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 11 && sd.cnt < 12) {
+				g.drawImage(PriestShield[3], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 12 && sd.cnt < 13) {
+				g.drawImage(PriestShield[4], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 13 && sd.cnt < 14) {
+				g.drawImage(PriestShield[5], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 14 && sd.cnt < 15) {
+				g.drawImage(PriestShield[6], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 15 && sd.cnt < 16) {
+				g.drawImage(PriestShield[7], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 16 && sd.cnt < 17) {
+				g.drawImage(PriestShield[0], shieldP.charX + 7, shieldP.charY + 3, frame);
+			} else if (sd.cnt >= 17 && sd.cnt < 18) {
+				g.drawImage(PriestShield[1], shieldP.charX + 7, shieldP.charY +3, frame);
+			} else if (sd.cnt >= 18 && sd.cnt < 19) {
+				g.drawImage(PriestShield[2], shieldP.charX + 7, shieldP.charY +3, frame);
+			} else if (sd.cnt >= 19 && sd.cnt < 20) {
+				g.drawImage(PriestShield[3], shieldP.charX + 7, shieldP.charY +3, frame);
+			} else if (sd.cnt >= 20 && sd.cnt < 21) {
+				g.drawImage(PriestShield[4], shieldP.charX + 7, shieldP.charY +3, frame);
+			} else if (sd.cnt >= 21 && sd.cnt < 22) {
+				g.drawImage(PriestShield[5], shieldP.charX + 7, shieldP.charY +3, frame);
+			} else if (sd.cnt >= 22 && sd.cnt < 23) {
+				g.drawImage(PriestShield[6], shieldP.charX + 7, shieldP.charY  +3, frame);
+			} else if (sd.cnt >= 23 && sd.cnt < 24) {
+				g.drawImage(PriestShield[7], shieldP.charX + 7, shieldP.charY +3, frame);
+			}
 
+			if (sd.cnt < 0) {
+				sd = null;
+				shieldP = null;
+			}
+		}
+	}
+
+
+	public void DrawSkill0(Graphics g, ImageObserver frame) {
+		skill0OnOff = false;
+		skill0Count = 0;
+
+		if (skill0cnt >= 0 && skill0cnt < 1) {
+			g.drawImage(PriestAttack[moveStatus][0], charX, charY, frame);
+		} else if (skill0cnt >= 1 && skill0cnt < 2) {
+			g.drawImage(PriestAttack[moveStatus][1], charX, charY, frame);
+		} else if (skill0cnt >= 2 && skill0cnt < 3) {
+			g.drawImage(PriestAttack[moveStatus][2], charX, charY, frame);
+		} else if (skill0cnt >= 3 && skill0cnt < 4) {
+			g.drawImage(PriestAttack[moveStatus][3], charX, charY, frame);
+		} else if (skill0cnt >= 4 && skill0cnt < 5) {
+			g.drawImage(PriestAttack[moveStatus][4], charX, charY, frame);
+		} else if (skill0cnt >= 5 && skill0cnt < 6) {
+			g.drawImage(PriestAttack[moveStatus][5], charX, charY, frame);
+		} else if (skill0cnt >= 6 && skill0cnt < 7) {
+			g.drawImage(PriestAttack[moveStatus][6], charX, charY, frame);
+		}
+
+		if (skill0cnt >= 5 && skill0cnt < 5.2) {
+			shiledHeal = new Heal(charX, charY, moveStatus, true);
+			healList.add(shiledHeal);
+		}
 	}
 
 	public void skill1() {
@@ -155,7 +253,24 @@ public class Priest extends Player {
 	}
 
 	public void DrawSkill1(Graphics g, ImageObserver frame) {
+		skill1OnOff = false;
+		skill1Count = 0;
 
+		if (skill1cnt >= 0 && skill1cnt < 1) {
+			g.drawImage(PriestAttack[moveStatus][1], charX, charY, frame);
+		} else if (skill1cnt >= 1 && skill1cnt < 2) {
+			g.drawImage(PriestAttack[moveStatus][2], charX, charY, frame);
+		} else if (skill1cnt >= 2 && skill1cnt < 3) {
+			g.drawImage(PriestAttack[moveStatus][3], charX, charY, frame);
+		} else if (skill1cnt >= 3 && skill1cnt < 4) {
+			g.drawImage(PriestAttack[moveStatus][4], charX, charY, frame);
+		}
+		
+		if(skill1cnt >= 1 && skill1cnt < 1.2){
+			playerList.add(this);
+			healeffect = new HealEffect();
+			healEffectList.add(healeffect);
+		}
 	}
 
 	public void skill2() {
@@ -191,8 +306,7 @@ public class Priest extends Player {
 		} else if (skill0On == false && skill1On == false && skill2On == false && skill3On == false)
 			Draw_human(g1, frame);
 
-		DrawHeal(g, g1, frame);
-		healEffect(g, frame);
+
 
 	}
 
@@ -205,12 +319,18 @@ public class Priest extends Player {
 		if (p.skill0On) {
 			DrawSkill0(g1, frame);
 		}
-		DrawSkill0(g, frame);
+		DrawShied(g, frame);
 	}
 
 	@Override
 	public void skill1Process(Player p, Graphics g, Graphics g1, ImageObserver frame) {
-		// TODO Auto-generated method stub
+		if (p.keyS && p.skill1OnOff) {
+			p.skill1On = true;
+			getSkill1();
+		}
+		if (p.skill1On) {
+			DrawSkill1(g1, frame);
+		}
 
 	}
 
@@ -223,7 +343,8 @@ public class Priest extends Player {
 	@Override
 	public void skill3Process(Player p, Graphics g, Graphics g1, ImageObserver frame) {
 		// TODO Auto-generated method stub
-
+		DrawHeal(g, g1, frame);
+		healEffect(g, frame);
 	}
 
 	@Override
@@ -242,22 +363,25 @@ public class Priest extends Player {
 			healeffect = (HealEffect) healEffectList.get(j);
 			healeffect.cnt += 0.2;
 		}
-		
+
 		if (skill0On)
 			skill0cnt += 0.2;
-		if (skill0cnt > 12)
+		if (skill0cnt > 7)
 			skill0On = false;
 		skill0Count++;
 		if (skill0Count > 50) {
 			skill0OnOff = true;
 			skill0cnt = 0;
 		}
+		
+		if(sd != null)
+			sd.cnt -= 0.2;
 
 		if (skill1On)
 			skill1cnt += 0.2;
-		if (skill1cnt > 9) {
+		if (skill1cnt > 4) {
 			skill1On = false;
-			skilling = false;
+
 		}
 		skill1Count++;
 		if (skill1Count > 50) {
@@ -331,6 +455,7 @@ public class Priest extends Player {
 		int plusX;
 		int plusY;
 		int heal;
+		boolean shield = false;
 		Image healImg;
 
 		public Heal(int x, int y, int direct) {
@@ -340,7 +465,7 @@ public class Priest extends Player {
 
 			switch (direct) {
 			case 0:
-				this.x += 30;
+				this.x += 35;
 				this.plusX = 0;
 				this.plusY = -speed;
 				break;
@@ -350,20 +475,56 @@ public class Priest extends Player {
 				this.plusY = 0;
 				break;
 			case 2:
-				this.x += 30;
-				this.y += 60;
+				this.x += 35;
+				this.y += 65;
 				this.plusX = 0;
 				this.plusY = speed;
 				break;
 			case 3:
 				this.y += 30;
-				this.x += 30;
-				this.plusX = speed;
+				this.x += 60; 
+ 				this.plusX = speed;
 				this.plusY = 0;
 				break;
 			}
 
 			healImg = new ImageIcon("Èú.png").getImage();
+		}
+
+		public Heal(int x, int y, int direct, boolean z) {
+			this.x = x;
+			this.y = y;
+			this.direct = direct;
+			this.speed = 2;
+			this.shield = true;
+
+			switch (direct) {
+			case 0:
+				this.x += 35;
+				this.plusX = 0;
+				this.plusY = -speed;
+				break;
+			case 1:
+				this.y += 30;
+				this.plusX = -speed;
+				this.plusY = 0;
+				break;
+			case 2:
+				this.x += 35;
+				this.y += 65;
+				this.plusX = 0;
+				this.plusY = speed;
+				break;
+			case 3:
+				this.y += 30;
+				this.x += 60; 
+ 				this.plusX = speed;
+				this.plusY = 0;
+				break;
+			
+			}
+
+			healImg = new ImageIcon("½¯µå ±¸Ã¼.png").getImage();
 		}
 
 		public void move() {
@@ -379,4 +540,15 @@ public class Priest extends Player {
 			cnt = 0;
 		}
 	}
+
+	class Shield {
+		double cnt;
+		int shiedlBarrier;
+
+		public Shield() {
+			cnt = 24;
+			shiedlBarrier = 50;
+		}
+	}
+
 }
