@@ -13,6 +13,7 @@ public class Priest extends Player {
 	Image[] PriestAttackEffect;
 	Image[] PriestShield;
 	Image[] PreistHeal;
+	Image[] PreistTelpo;
 
 	ArrayList healList = new ArrayList();
 	ArrayList playerList = new ArrayList();
@@ -25,7 +26,10 @@ public class Priest extends Player {
 	Player shieldP = null;
 	Heal shiledHeal = null;
 	Shield sd = null;
-
+	
+	
+	boolean skill3gogo = true;
+	
 	public Priest(int x, int y) {
 		super(x, y);
 		maxHp = 500;
@@ -56,10 +60,13 @@ public class Priest extends Player {
 			PriestShield[i] = new ImageIcon("프리스트 보호막 " + i + ".png").getImage();
 
 		PreistHeal = new Image[19];
-		for (int i = 0; i < PreistHeal.length; ++i){
-			PreistHeal[i] = new ImageIcon("장판힐" + i + ".png").getImage();
-			
-		}
+		for (int i = 0; i < PreistHeal.length; ++i)
+			PreistHeal[i] = new ImageIcon("장판힐" + i + ".png").getImage();	
+		
+		PreistTelpo = new Image[4];
+		for (int i = 0; i < PreistTelpo.length; ++i)
+				PreistTelpo[i] = new ImageIcon("프리스트 텔포 " + i + ".png").getImage();
+
 		
 	}
 
@@ -112,7 +119,7 @@ public class Priest extends Player {
 					}
 				}
 			}
-
+			
 			heal.move();
 			if (heal.x > Main.f_width)
 				healList.remove(i);
@@ -336,23 +343,56 @@ public class Priest extends Player {
 			g.drawImage(PreistHeal[14], skill2X-170, skill2Y-85, frame);
 		}else if(skill2cnt >= 33 && skill2cnt < 35){
 			g.drawImage(PreistHeal[15], skill2X-170, skill2Y-85, frame);
-		}else if(skill2cnt >= 35 && skill2cnt < 37){
+		}else if(skill2cnt >= 35 && skill2cnt < 50){
+			g.drawImage(PreistHeal[0], skill2X-170, skill2Y-85, frame);
+		}
+	}
+	
+	public void DrawSkill2_1(Graphics g, ImageObserver frame) {
+		if(skill2cnt >= 35 && skill2cnt < 37){
 			g.drawImage(PreistHeal[16], skill2X-170, skill2Y-85, frame);
 		}else if(skill2cnt >= 37 && skill2cnt < 39){
 			g.drawImage(PreistHeal[17], skill2X-170, skill2Y-85, frame);
 		}else if(skill2cnt >= 39 && skill2cnt < 50){
 			g.drawImage(PreistHeal[18], skill2X-170, skill2Y-85, frame);
 		}
-		
-		
 	}
 
 	public void skill3() {
-
+		if(skill3gogo)
+		{
+			switch(skill3direct){
+			case 0:
+				charY -= 200;
+				break;
+			case 1:
+				charX -= 200;
+				break;	
+			case 2:
+				charY += 200;
+				break;
+			case 3:
+				charX += 200;
+				break;
+				
+			}
+			skill3gogo =false;
+		}
 	}
 
 	public void DrawSkill3(Graphics g, ImageObserver frame) {
-
+		skill3OnOff = false;
+		skill3Count = 0;
+		
+		if (skill3cnt >= 0 && skill3cnt < 1) {
+			g.drawImage(PreistTelpo[0], skill3X+27, skill3Y, frame);
+		}else if(skill3cnt >= 1 && skill3cnt < 2){
+			g.drawImage(PreistTelpo[1], skill3X+27, skill3Y, frame);
+		}else if(skill3cnt >= 2 && skill3cnt < 3){
+			g.drawImage(PreistTelpo[2], skill3X+27, skill3Y, frame);
+		}else if(skill3cnt >= 3 && skill3cnt < 4){
+			g.drawImage(PreistTelpo[3], skill3X+27, skill3Y, frame);
+		}
 	}
 
 	@Override
@@ -400,7 +440,7 @@ public class Priest extends Player {
 
 	@Override
 	public void skill2Process(Player p, Graphics g, Graphics g1, ImageObserver frame) {
-		if (p.keyD && p.skill1OnOff) {
+		if (p.keyD && p.skill2OnOff) {
 			p.skill2On = true;
 			getSkill2();
 			skilling = true;
@@ -408,13 +448,22 @@ public class Priest extends Player {
 		if (p.skill2On) {
 			DrawSkill2(g, frame);
 			DrawSkill2Motion(g1, frame);
+			DrawSkill2_1(g, frame);
 		}
-
 	}
 
 	@Override
 	public void skill3Process(Player p, Graphics g, Graphics g1, ImageObserver frame) {
-		// TODO Auto-generated method stub
+		if (p.keyF && p.skill3OnOff) {
+			p.skill3On = true;
+			getSkill3();
+			skilling = true;
+		}
+		if (p.skill3On) {
+			DrawSkill3(g, frame);
+			skill3();
+		}
+		
 		DrawHeal(g, g1, frame);
 		healEffect(g, frame);
 	}
@@ -476,10 +525,11 @@ public class Priest extends Player {
 		}
 
 		if (skill3On)
-			skill3cnt += 0.15;
-		if (skill3cnt > 17) {
+			skill3cnt += 0.3;
+		if (skill3cnt > 4) {
 			skill3On = false;
 			skilling = false;
+			skill3gogo = true;
 		}
 		skill3Count++;
 		if (skill3Count > 50) {

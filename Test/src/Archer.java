@@ -759,7 +759,6 @@ public class Archer extends Player {
 		if (p.skill1On) {
 			DrawSkill1(g1, frame);
 		}
-
 	}
 
 	@Override
