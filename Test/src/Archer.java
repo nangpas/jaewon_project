@@ -182,7 +182,7 @@ public class Archer extends Player {
 	}
 
 	public void DrawSkill1(Graphics g, ImageObserver frame) {
-
+		
 		skill1OnOff = false;
 		skill1Count = 0;
 

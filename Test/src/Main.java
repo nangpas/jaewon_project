@@ -45,9 +45,8 @@ public class Main extends JFrame implements Runnable {
 		setTitle("Å×½ºÆ®");
 		setSize(f_width, f_height);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		p = new Archer(300, 300);
-		playerList.add(p);
-		p = new Warrior(200, 200);
+		
+		p = new Archer(200, 200);
 		playerList.add(p);
 		p = new Priest(500, 200);
 		playerList.add(p);
@@ -56,16 +55,15 @@ public class Main extends JFrame implements Runnable {
 			p = (Player) playerList.get(i);
 			addKeyListener(p);
 		}
-
+		
 		for (int i = 0; i < playercount; i++) {
 			mon = new Monster(600, 250);
 			monsterList.add(mon);
-		}
+		}	
 		
 		th = new Thread(this);
 		th.start();
 		setVisible(true);
-
 	}
 
 	@Override

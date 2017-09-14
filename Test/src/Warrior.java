@@ -15,6 +15,8 @@ public class Warrior extends Player {
 	Image[] skill1Img;
 	Image[][] skill2Img;
 	
+	Archer ar;
+	
 	Player p;
 	public Warrior(int x, int y) {
 		super(x, y);
@@ -47,6 +49,7 @@ public class Warrior extends Player {
 		for (int i = 0; i < WarriorAttack.length; ++i)
 			for (int j = 0; j < WarriorAttack[i].length; ++j)
 				WarriorAttack[i][j] = new ImageIcon("전사 기본공격 " + i + "_" + j + ".png").getImage();
+		
 	}
 
 	public Warrior() {

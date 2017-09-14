@@ -43,8 +43,6 @@ public class Priest extends Player {
 		for (int i = 0; i < PriestDefault.length; ++i)
 			for (int j = 0; j < PriestDefault[i].length; ++j)
 				PriestDefault[i][j] = new ImageIcon("프리스트 기본 " + i + "_" + j + ".png").getImage();
-		
-		
 
 		PriestAttack = new Image[4][7];
 		for (int i = 0; i < PriestAttack.length; ++i)
